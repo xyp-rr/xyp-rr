@@ -11,5 +11,10 @@ node_modules/
 # local backups
 index.backup-*.html
 
+# local-only tooling and deploy scripts (not published to the site repo)
+tools/
+deploy-git.sh
+deploy.sh
+
 # os
 .DS_Store
