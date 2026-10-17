@@ -1,0 +1,15 @@
+# secrets - never commit
+.cf_token
+.cf_account
+.gh_token
+
+# build / deploy artifacts
+.wrangler/
+public/
+node_modules/
+
+# local backups
+index.backup-*.html
+
+# os
+.DS_Store

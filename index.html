@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?3049074fcd9504c943f197cf274d7f4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多城热门活动日报</title>
+<meta name="description" content="多城热门活动日报：展览市集、户外赏花、提前预告、花期预警与夜游推荐，每日 08:00 自动更新。">
+<meta name="theme-color" content="#c0362c">
+<meta property="og:title" content="多城热门活动日报">
+<meta property="og:description" content="展览市集 · 户外赏花 · 提前预告 · 花期预警 · 夜游推荐">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1a1d24; --sub:#6b7280; --faint:#9aa1ad;
+    --line:#e8ebf0; --soft:#f7f8fa;
+    --c-exhibition:#6b4e9e; --c-market:#c0362c; --c-outdoor:#2f855a;
+    --c-preview:#1f7a8c; --c-bloom:#b97116; --c-night:#4c5b8c;
+    --warn:#c0362c; --gold:#a8791b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+
+  /* ---------- 顶部 ---------- */
+  .hero{background:linear-gradient(135deg,#fff4f0 0%,#f2f7fb 55%,#f6f4fb 100%);
+    border:1px solid var(--line);border-radius:18px;padding:22px 20px;margin-bottom:16px}
+  .hero .kicker{font-size:12px;letter-spacing:2px;color:var(--c-market);font-weight:600}
+  .hero h1{font-size:26px;font-weight:700;letter-spacing:1px;margin-top:6px}
+  .hero .date{color:var(--sub);font-size:13px;margin-top:6px}
+  .stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .stat{background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;font-size:12px;color:var(--sub)}
+  .stat b{color:var(--ink);font-weight:600}
+
+  /* ---------- 本周必去 ---------- */
+  .picks{margin-bottom:20px}
+  .sec-title{font-size:14px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:7px;margin-bottom:10px}
+  .sec-title .dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+  .pick{background:linear-gradient(180deg,#fffdf6,#fff);border:1px solid #f0e4c8;border-left:4px solid var(--gold);
+    border-radius:14px;padding:13px 15px;margin-bottom:9px}
+  .pick .t{font-size:15px;font-weight:600}
+  .pick .m{font-size:12px;color:var(--sub);margin-top:3px}
+
+  /* ---------- 筛选 ---------- */
+  .filters{position:sticky;top:0;z-index:20;background:var(--bg);
+    padding:8px 0 10px;display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;margin-bottom:6px}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--sub);
+    font-size:13px;padding:6px 14px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .filters button:hover{border-color:var(--c-market);color:var(--c-market)}
+  .filters button.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  /* ---------- 城市切换 ---------- */
+  .cities{display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px}
+  .cities::-webkit-scrollbar{display:none}
+  .cities .clabel{font-size:12px;color:var(--faint);flex:0 0 auto;margin-right:2px}
+  .cities button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--sub);
+    font-size:13px;padding:6px 14px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .cities button:hover{border-color:var(--c-market);color:var(--c-market)}
+  .cities button.active{background:var(--c-market);border-color:var(--c-market);color:#fff}
+
+  /* ---------- 分组与卡片 ---------- */
+  .group{margin-bottom:22px}
+  .group h2{font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .group h2 .bar{width:4px;height:15px;border-radius:2px;background:var(--gc)}
+  .group h2 .cnt{font-size:12px;color:var(--faint);font-weight:400}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .card .title{font-size:15px;font-weight:600;line-height:1.45}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+  .tag{font-size:11px;color:#4b5563;background:var(--soft);border:1px solid var(--line);
+    border-radius:6px;padding:2px 8px}
+  .tag.price{color:var(--c-outdoor);background:#eef7f1;border-color:#d9ece0}
+  .tag.free{color:var(--c-outdoor)}
+  .card .desc{font-size:13px;color:#4a4f57;margin-top:9px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:999px;white-space:nowrap;font-weight:500;
+    background:var(--gsoft);color:var(--gc)}
+  .badge.alert{background:#fdeeec;color:var(--warn)}
+  .badge.ddl{background:#fff4e5;color:var(--gold);font-weight:600}
+  .badges{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+  .empty{color:var(--faint);font-size:13px;text-align:center;padding:34px 0}
+
+  #top{position:fixed;right:16px;bottom:20px;width:40px;height:40px;border-radius:50%;
+    background:var(--card);border:1px solid var(--line);box-shadow:0 2px 8px rgba(16,24,40,.12);
+    color:var(--sub);font-size:16px;cursor:pointer;display:none}
+  @media (max-width:520px){
+    .hero h1{font-size:22px}
+    .wrap{padding:14px 12px 56px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker" id="cityKicker">GUANGZHOU · DAILY</div>
+    <h1 id="cityTitle">广州热门活动日报</h1>
+    <div class="date" id="updateDate"></div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <nav class="cities" id="cities"></nav>
+
+  <section class="picks" id="picks"></section>
+
+  <nav class="filters" id="filters"></nav>
+  <main id="list"></main>
+</div>
+<button id="top" title="回到顶部">↑</button>
+
+<script>
+const CATS = [
+  {key:"all",        name:"全部",     color:"#1a1d24", soft:"#f1f2f4"},
+  {key:"exhibition", name:"展览",     color:"#6b4e9e", soft:"#f1ecf7"},
+  {key:"market",     name:"会展市集", color:"#c0362c", soft:"#fbeeec"},
+  {key:"outdoor",    name:"户外赏花", color:"#2f855a", soft:"#ecf5ef"},
+  {key:"preview",    name:"提前预告", color:"#1f7a8c", soft:"#eaf5f7"},
+  {key:"bloom",      name:"花期预警", color:"#b97116", soft:"#fdf3e6"},
+  {key:"night",      name:"夜游推荐", color:"#4c5b8c", soft:"#eef0f7"}
+];
+const BADGE = {exhibition:"展览", market:"会展市集", outdoor:"赏花", preview:"预告", bloom:"花期", night:"夜游"};
+
+/* ===== 多城数据加载 =====
+   城市注册表 data/cities.json : [{"key":"gz","name":"广州","en":"GUANGZHOU"}, ...]
+   活动数据   data/events-<key>.json : {"updated":"YYYY-MM-DD","items":[{...}, ...]}
+   新增城市只需在 cities.json 追加一行，无需改本文件；数据文件就绪前显示采集中。 */
+const DATA_BASE = "data";
+const cityIndex = [];
+const dataCache = {};
+const updatedCache = {};
+let current = "all";
+let currentCity = null;
+
+function curCity(){
+  return cityIndex.find(x => x.key === currentCity) || cityIndex[0] || null;
+}
+function curEvents(){
+  return dataCache[currentCity] || [];
+}
+function pending(){
+  return dataCache[currentCity] === null || dataCache[currentCity] === undefined;
+}
+
+async function boot(){
+  const box = document.getElementById("list");
+  box.innerHTML = '<div class="empty">加载中…</div>';
+  try {
+    const r = await fetch(DATA_BASE + "/cities.json", {cache: "no-store"});
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    if(Array.isArray(j)) cityIndex.push.apply(cityIndex, j);
+  } catch(e) {
+    box.innerHTML = '<div class="empty">城市列表加载失败，请刷新重试</div>';
+    return;
+  }
+  if(cityIndex.length === 0){
+    box.innerHTML = '<div class="empty">尚未配置任何城市</div>';
+    return;
+  }
+  let key = "";
+  try {
+    const q = new URLSearchParams(location.search).get("city");
+    if(q && cityIndex.some(c => c.key === q)) key = q;
+  } catch(e) {}
+  if(!key){
+    try {
+      const saved = localStorage.getItem("events-city");
+      if(saved && cityIndex.some(c => c.key === saved)) key = saved;
+    } catch(e) {}
+  }
+  if(!key) key = cityIndex[0].key;
+  currentCity = key;
+  renderCities();
+  renderFilters();
+  await loadCity(key);
+}
+
+async function loadCity(key){
+  if(!(key in dataCache)){
+    try {
+      const r = await fetch(DATA_BASE + "/events-" + key + ".json", {cache: "no-store"});
+      if(!r.ok) throw new Error("HTTP " + r.status);
+      const j = await r.json();
+      dataCache[key] = Array.isArray(j) ? j : (j && Array.isArray(j.items) ? j.items : []);
+      updatedCache[key] = (j && j.updated) || "";
+    } catch(e) {
+      dataCache[key] = null;
+    }
+  }
+  renderHero();
+  renderPicks();
+  renderList();
+}
+
+function today(){
+  const d = new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+function daysLeft(end){
+  if(!end) return null;
+  const p = String(end).split("-");
+  if(p.length !== 3) return null;
+  const d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  return Math.round((d - today()) / 86400000);
+}
+function live(item){
+  const d = daysLeft(item.end);
+  return d === null || d >= 0;
+}
+function fmtDate(){
+  const d = new Date();
+  const p = n => (n < 10 ? "0" + n : "" + n);
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+}
+
+function renderHero(){
+  const c = curCity();
+  if(!c) return;
+  const items = curEvents().filter(live);
+  document.title = c.name + "热门活动日报";
+  document.getElementById("cityTitle").textContent = c.name + "热门活动日报";
+  document.getElementById("cityKicker").textContent = c.en + " · DAILY";
+  document.getElementById("updateDate").textContent = "数据更新于 " + (updatedCache[currentCity] || fmtDate()) + " · 每日 08:00 自动刷新";
+  const soon = items.filter(e => { const d = daysLeft(e.end); return d !== null && d >= 0 && d <= 7; }).length;
+  const picks = items.filter(e => e.top).length;
+  const cats = CATS.filter(c2 => c2.key !== "all" && items.some(e => e.cat === c2.key)).length;
+  document.getElementById("stats").innerHTML =
+    '<span class="stat">本期共 <b>' + items.length + '</b> 条</span>' +
+    '<span class="stat">本周必去 <b>' + picks + '</b> 条</span>' +
+    '<span class="stat">7 天内截止 <b>' + soon + '</b> 条</span>' +
+    '<span class="stat">覆盖 <b>' + cats + '</b> 个分类</span>';
+}
+
+function renderPicks(){
+  const items = curEvents().filter(live);
+  const box = document.getElementById("picks");
+  const picks = items.filter(e => e.top);
+  if(picks.length === 0){ box.style.display = "none"; return; }
+  box.style.display = "";
+  box.innerHTML = '<div class="sec-title"><span class="dot"></span>本周必去</div>' +
+    picks.map(e =>
+      '<div class="pick"><div class="t">' + e.title + '</div>' +
+      '<div class="m">' + [e.date, e.venue, e.price].filter(Boolean).join(" · ") + '</div></div>'
+    ).join("");
+}
+
+function renderFilters(){
+  const el = document.getElementById("filters");
+  el.innerHTML = "";
+  CATS.forEach(c => {
+    const b = document.createElement("button");
+    b.textContent = c.name;
+    if(c.key === current) b.className = "active";
+    b.onclick = () => { current = c.key; renderFilters(); renderList(); };
+    el.appendChild(b);
+  });
+}
+
+function renderCities(){
+  const el = document.getElementById("cities");
+  el.innerHTML = '<span class="clabel">城市</span>';
+  cityIndex.forEach(c => {
+    const b = document.createElement("button");
+    b.textContent = c.name;
+    if(c.key === currentCity) b.className = "active";
+    b.onclick = async () => {
+      if(currentCity === c.key) return;
+      currentCity = c.key;
+      try { localStorage.setItem("events-city", c.key); } catch(e) {}
+      try { history.replaceState(null, "", "?city=" + c.key); } catch(e) {}
+      renderCities();
+      renderFilters();
+      if(pending()){
+        document.getElementById("list").innerHTML = '<div class="empty">加载中…</div>';
+      }
+      await loadCity(c.key);
+    };
+    el.appendChild(b);
+  });
+}
+
+function cardHTML(e, cat){
+  const d = daysLeft(e.end);
+  let ddl = "";
+  if(d !== null && d >= 0){
+    ddl = d === 0 ? '<span class="badge ddl">今天截止</span>'
+                  : (d <= 7 ? '<span class="badge ddl">剩 ' + d + ' 天</span>' : "");
+  }
+  const alert = e.alert ? '<span class="badge alert">' + e.alert + '</span>' : "";
+  const tags = [e.date, e.venue, e.area, e.price].filter(Boolean)
+    .map(t => '<span class="tag' + (t === e.price ? " price" : "") + '">' + t + '</span>').join("");
+  return '<div class="card"><div class="top"><div>' +
+    '<div class="title">' + e.title + '</div>' +
+    '<div class="tags">' + tags + '</div></div>' +
+    '<div class="badges">' + alert + ddl +
+    '<span class="badge">' + BADGE[e.cat] + '</span></div></div>' +
+    (e.desc ? '<div class="desc">' + e.desc + '</div>' : "") + '</div>';
+}
+
+function renderList(){
+  const main = document.getElementById("list");
+  main.innerHTML = "";
+  if(pending()){
+    main.innerHTML = '<div class="empty">该城市活动数据采集中，每日 08:00 自动更新</div>';
+    return;
+  }
+  const items = (current === "all" ? curEvents() : curEvents().filter(e => e.cat === current)).filter(live);
+  if(items.length === 0){ main.innerHTML = '<div class="empty">该城市暂无进行中的活动</div>'; return; }
+  const groups = {};
+  items.forEach(e => { (groups[e.cat] = groups[e.cat] || []).push(e); });
+  CATS.filter(c => c.key !== "all" && groups[c.key]).forEach(c => {
+    const sec = document.createElement("div");
+    sec.className = "group";
+    sec.style.setProperty("--gc", c.color);
+    sec.style.setProperty("--gsoft", c.soft);
+    sec.innerHTML = '<h2><span class="bar"></span>' + c.name +
+      '<span class="cnt">' + groups[c.key].length + ' 条</span></h2>' +
+      groups[c.key].map(e => cardHTML(e, c.key)).join("");
+    main.appendChild(sec);
+  });
+}
+
+boot();
+
+const topBtn = document.getElementById("top");
+window.addEventListener("scroll", () => { topBtn.style.display = window.scrollY > 400 ? "block" : "none"; });
+topBtn.onclick = () => window.scrollTo({top: 0, behavior: "smooth"});
+</script>
+</body>
+</html>
