@@ -8,5 +8,10 @@
     "key": "sz",
     "name": "深圳",
     "en": "SHENZHEN"
+  },
+  {
+    "key": "cs",
+    "name": "长沙",
+    "en": "CHANGSHA"
   }
 ]
