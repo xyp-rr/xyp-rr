@@ -605,9 +605,29 @@ function renderFilters(){
     b.className = "f-chip" + (c.key === current ? " active" : "");
     b.innerHTML = c.key === "all" ? "全部" : "<i>" + c.no + "</i>" + c.name;
     b.setAttribute("aria-pressed", c.key === current ? "true" : "false");
-    b.onclick = () => { current = c.key; renderFilters(); renderList(); };
+    b.onclick = () => {
+      const same = current === c.key;
+      current = c.key;
+      renderFilters();
+      if(!same){
+        renderList();
+        /* 新卡片带 .reveal，切栏后必须重新观察入场，否则 opacity:0 不可见 */
+        observeReveals();
+      }
+      /* 报头+头版较高，切栏后把列表带入视口，首屏即可看到栏目内容 */
+      scrollToList();
+    };
     el.appendChild(b);
   });
+}
+
+/* 切栏后滚动到列表（留出吸顶栏目导航高度；尊重减少动效偏好）*/
+function scrollToList(){
+  const main = document.getElementById("list");
+  if(!main) return;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const top = main.getBoundingClientRect().top + window.scrollY - 76;
+  window.scrollTo({ top: Math.max(0, top), behavior: reduce ? "auto" : "smooth" });
 }
 
 /* ============ 城市版本 ============ */
@@ -684,6 +704,8 @@ function renderList(){
       sorted.map(e => cardHTML(e, c)).join("");
     main.appendChild(sec);
   });
+  /* 卡片带 .reveal 入场类，任何路径重渲染后都要重新观察，避免不可见 */
+  observeReveals();
 }
 
 /* ============ 滚动入场 ============ */
