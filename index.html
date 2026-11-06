@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
 <script>
 var _hmt = _hmt || [];
@@ -11,727 +11,826 @@ var _hmt = _hmt || [];
 })();
 </script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>多城热门活动日报 · 城市活动晨报</title>
-<meta name="description" content="城市活动晨报：头版必去、号外快讯与六大栏目——展览市集、户外赏花、提前预告、花期预警、夜游推荐，每日 08:00 自动更新。">
-<meta name="theme-color" content="#b5382a">
-<meta property="og:title" content="城市活动晨报">
-<meta property="og:description" content="头版必去 · 号外快讯 · 六大栏目 · 每日 08:00 付印">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>城市活动晨报 · 这周去哪</title>
+<meta name="description" content="像翻旅行志一样逛城市：广州、深圳、长沙每日本地活动精选，展览、市集、赏花、演出、夜游，按板块筛选，点开看详情。每天 08:00 自动更新。">
+<meta name="theme-color" content="#f7f2e8">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="城市活动晨报 · 这周去哪">
+<meta property="og:description" content="城市漫游手册 · 六大板块 · 每天 08:00 更新">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23b5382a'/%3E%3Ctext x='32' y='45' font-size='34' text-anchor='middle' fill='%23fdf3e8' font-family='serif' font-weight='900'%3E晨%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23de4c26'/%3E%3Ctext x='32' y='46' font-size='36' text-anchor='middle' fill='%23fff8f2' font-family='serif' font-weight='900'%3E晨%3C/text%3E%3C/svg%3E">
+<script>
+/* 主题在首屏绘制前落定，避免闪白 */
+(function(){
+  try {
+    var t = localStorage.getItem("city-events-theme");
+    if (t !== "light" && t !== "dark") {
+      t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+})();
+</script>
 
 <!--
-  ============ 城市活动晨报 · 生产版（v2 报纸编辑风）============
-  定调：把「日报」还原成一份报纸 —— 报头、期号、号外、头版、栏目、刊脚。
-  展示字：Playfair Display + Noto Serif SC（思源宋体）
-  正文字：Noto Sans SC；数据字：IBM Plex Mono
-  主色：暖纸 #f6f1e6（60%）/ 墨色与发丝线（30%）/ 报刊红 #b5382a（10%，唯一强调色）
-  字体走 loli.net（Google Fonts 国内镜像），失败时降级系统衬线，版式不散。
-  数据：data/cities.json 城市注册表 + data/events-<key>.json（{"updated","items"}），
-  字段 {cat,title,date,end,venue,area,price,desc,top,alert}，新增城市只加一行注册表。
-  改版方案与预览见 design-preview/（未跟踪目录，不随站点发布）。
+  ============ 城市活动晨报 · 城市漫游手册 ============
+  定调：旅行志博客 —— 大幅城市封面 + 思源宋体标题 + 陶土色强调 + 侧栏部件
+  展示字：Fraunces（拉丁斜体）+ Noto Serif SC（中文标题）
+  正文：Noto Sans SC；数据：IBM Plex Mono
+
+  结构：固定顶栏（品牌 + 六大板块菜单 + 城市 + 搜索 + 主题）
+        封面横幅（随页面滚动收起）
+        主栏：活动列表（单行卡片 + 分页） / 侧栏：城市卡 · 板块 · 区域 · 最近截止
+
+  数据契约（与自动化任务绑定，禁止改动）：
+    data/cities.json          [{key,name,en}]
+    data/events-<key>.json    {updated,items:[{cat,title,date,end,venue,area,price,desc,top,alert}]}
+  新增城市只要在 cities.json 加一行，并在 assets/ 放 city-<key>.jpg。
+  活动详情：detail.html?city=<key>&t=<encodeURIComponent(title)>，新开页签。
 -->
 
-<!-- 字体：国内可达镜像 + font-display:swap -->
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
-<link href="https://fonts.loli.net/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-/* ============ 设计令牌 ============ */
-:root{
-  --paper:#f6f1e6;          /* 纸色主表面 */
-  --paper-deep:#efe7d3;     /* 纸色深一档 */
-  --card:#fffdf6;           /* 卡片纸面 */
-  --ink:#221e18;            /* 墨色（近黑暖调） */
-  --ink-2:#4a4338;          /* 次级文字 */
-  --muted:#6f6656;          /* 弱文字（实测对纸色 5.0:1） */
-  --faint:#a89d88;          /* 装饰级弱文字 */
-  --line:#dcd2ba;           /* 发丝线 */
-  --line-soft:#e8e0cc;      /* 更浅发丝线 */
-  --accent:#b5382a;         /* 报刊红：唯一强调色 */
-  --accent-deep:#8f2a1f;
-  --accent-soft:#f6e7e2;
-
-  --font-display:"Playfair Display","Noto Serif SC","Songti SC","STSong","SimSun",serif;
-  --font-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  --font-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,monospace;
-
-  --radius-sm:4px; --radius-md:8px; --radius-lg:14px;
-  --shadow-1:0 2px 8px rgba(52,40,20,.08);
-  --shadow-2:0 8px 24px rgba(52,40,20,.14);
-  --ease-out:cubic-bezier(.16,1,.3,1);
-  --dur-fast:160ms; --dur-base:320ms; --dur-slow:640ms;
-}
-
-/* ============ 基础 ============ */
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--font-body);color:var(--ink);line-height:1.6;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  background:
-    radial-gradient(1100px 480px at 88% -6%, #f2e9d6, transparent 62%),
-    radial-gradient(860px 420px at -8% 6%, #f0e8d6, transparent 58%),
-    var(--paper);
-  min-height:100vh;
-}
-/* 新闻纸颗粒：fixed 叠加层，multiply 混合，极低透明度 */
-body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:2000;opacity:.06;
-  mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-::selection{background:var(--accent);color:#fdf6ec}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
-
-.wrap{max-width:940px;margin:0 auto;padding:30px 24px 72px;position:relative;z-index:1}
-
-/* 报纸双线：粗规 + 细规 */
-.rule-double{border-top:3px solid var(--ink);position:relative;margin:16px 0}
-.rule-double::after{content:"";display:block;border-top:1px solid var(--ink);margin-top:3px}
-
-/* ============ 入场动效（编排一次，错峰 70ms）============ */
-.reveal{opacity:0;transform:translateY(18px)}
-.reveal.in{opacity:1;transform:none;
-  transition:opacity var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out)}
-.d1{transition-delay:60ms}.d2{transition-delay:130ms}.d3{transition-delay:200ms}
-.d4{transition-delay:270ms}.d5{transition-delay:340ms}
-
-/* ============ 报头 ============ */
-.masthead{position:relative;padding-top:6px}
-.mast-row{
-  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-  border-bottom:1px solid var(--ink);padding:0 76px 8px 0;flex-wrap:wrap;
-}
-.mast-en{font-family:var(--font-mono);font-size:11px;letter-spacing:.3em;color:var(--ink);font-weight:600}
-.mast-date{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--muted)}
-.mast-issue{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--accent);font-weight:600}
-
-/* 印章：「日更」红戳，故意压出报头边界（破格元素）*/
-.mast-seal{
-  position:absolute;top:-9px;right:-4px;width:56px;height:56px;z-index:5;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border:2px solid var(--accent);border-radius:6px;color:var(--accent);
-  font-family:var(--font-display);font-weight:900;font-size:19px;line-height:1.08;
-  letter-spacing:.06em;transform:rotate(-7deg);background:rgba(246,241,230,.55);
-}
-.mast-seal span{display:block}
-
-.mast-main{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;padding:22px 0 4px}
-.kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.32em;color:var(--accent);font-weight:600;margin-bottom:10px}
-.mast-titles h1{
-  font-family:var(--font-display);font-weight:900;
-  font-size:clamp(44px,8.4vw,76px);line-height:1.04;letter-spacing:.045em;color:var(--ink);
-}
-.mast-titles h1 .ink-accent{color:var(--accent)}
-.mast-sub{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--muted);margin-top:12px}
-
-/* 今日数据面板：报纸式统计栏 */
-.mast-stats{width:236px;border:1px solid var(--ink);border-radius:var(--radius-md);background:var(--card);overflow:hidden}
-.mast-stats .st-head{
-  background:var(--ink);color:#f3ecdd;font-family:var(--font-mono);font-size:10px;
-  letter-spacing:.3em;padding:6px 12px;font-weight:600;
-}
-.stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 12px}
-.stat-row + .stat-row{border-top:1px solid var(--line-soft)}
-.stat-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;color:var(--muted)}
-.stat-num{font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
-.stat-num i{font-style:normal;font-family:var(--font-body);font-size:11px;color:var(--muted);margin-left:3px;font-weight:500}
-.st-foot{
-  border-top:1px solid var(--line-soft);padding:7px 12px;
-  font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--faint);
-}
-
-/* 城市版本页签 */
-.mast-cities{display:flex;align-items:center;gap:22px;padding:12px 2px 4px;flex-wrap:wrap}
-.mast-cities .clabel{font-family:var(--font-mono);font-size:10px;letter-spacing:.26em;color:var(--faint)}
-.city-btn{
-  appearance:none;border:0;background:none;cursor:pointer;padding:4px 2px;
-  font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--muted);
-  letter-spacing:.08em;transition:color var(--dur-fast) ease-out;min-height:32px;
-}
-.city-btn:hover{color:var(--ink)}
-.city-btn.active{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
-
-/* ============ 号外跑马灯 ============ */
-.ticker{
-  display:flex;align-items:stretch;margin:20px 0 30px;overflow:hidden;
-  border:1.5px solid var(--ink);border-radius:var(--radius-md);background:var(--accent);color:#fdf3e8;
-}
-.ticker-label{
-  flex:0 0 auto;background:var(--ink);color:#f6efe0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding:8px 14px;gap:1px;
-}
-.ticker-label b{font-family:var(--font-display);font-weight:900;font-size:17px;letter-spacing:.1em}
-.ticker-label em{font-family:var(--font-mono);font-style:normal;font-size:8.5px;letter-spacing:.3em;opacity:.75}
-.ticker-view{flex:1 1 auto;overflow:hidden;display:flex;align-items:center;min-width:0}
-.ticker-track{display:inline-flex;white-space:nowrap;animation:marquee 48s linear infinite;will-change:transform}
-.ticker:hover .ticker-track,.ticker:focus-within .ticker-track{animation-play-state:paused}
-@keyframes marquee{to{transform:translateX(-50%)}}
-.tk-half{display:inline-flex;align-items:center;gap:13px;padding:9px 13px 9px 0}
-.tk{display:inline-flex;align-items:baseline;gap:8px}
-.tk i{font-family:var(--font-mono);font-style:normal;font-size:11px;letter-spacing:.06em;color:#ffd9cf}
-.tk b{font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:.02em}
-.tk s{font-family:var(--font-mono);text-decoration:none;font-size:10.5px;opacity:.82}
-.tk-sep{opacity:.55;font-size:9px}
-
-/* ============ 区块标题（栏目通用）============ */
-.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
-.sec-head h2{font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:.06em;color:var(--ink)}
-.sec-en{font-family:var(--font-mono);font-size:10px;letter-spacing:.26em;color:var(--faint)}
-.sec-rule{flex:1;border-top:1px solid var(--line);transform:translateY(-3px)}
-
-/* ============ 头版（本周必去）============ */
-.lead{margin-bottom:36px}
-.lead-item{
-  display:grid;grid-template-columns:104px 1fr;gap:22px;
-  padding:18px 0 20px;border-top:1.5px solid var(--ink);
-}
-.lead-date{
-  border:1px solid var(--line);border-radius:var(--radius-md);background:var(--card);
-  display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 8px;height:max-content;
-}
-.ld-end{font-family:var(--font-display);font-weight:900;font-size:27px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
-.ld-cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.28em;color:var(--muted)}
-.ld-days{margin-top:5px}
-.lead-tags{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.lead-body h3{
-  font-family:var(--font-display);font-weight:700;color:var(--ink);
-  font-size:clamp(20px,3.2vw,25px);line-height:1.32;letter-spacing:.02em;
-}
-.lead-meta{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:8px}
-.lead-desc{font-size:13.5px;line-height:1.9;color:var(--ink-2);margin-top:10px;text-align:justify}
-/* 首字下沉：报纸导读标志手法 */
-.lead-desc::first-letter{
-  font-family:var(--font-display);font-weight:900;font-size:2.7em;line-height:.92;
-  float:left;padding:.06em .14em 0 0;color:var(--accent);
-}
-.picks-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
-.pick-item{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
-.pick-no{font-family:var(--font-mono);font-size:11px;color:var(--faint);padding-top:3px;font-variant-numeric:tabular-nums}
-.pick-item h3{font-family:var(--font-display);font-weight:600;font-size:15px;line-height:1.5;color:var(--ink)}
-.pick-meta{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-top:4px}
-
-/* ============ 栏目导航（吸顶）============ */
-.filters{
-  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:8px;
-  padding:10px 0;margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-  scrollbar-width:none;background:rgba(246,241,230,.92);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--ink);
-}
-.filters::-webkit-scrollbar{display:none}
-.filters .flabel{font-family:var(--font-mono);font-size:10px;letter-spacing:.26em;color:var(--faint);flex:0 0 auto;margin-right:4px}
-.f-chip{
-  flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:40px;
-  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;
-  font-family:var(--font-body);font-size:13px;font-weight:500;padding:8px 15px;
-  border-radius:var(--radius-sm);white-space:nowrap;
-  transition:border-color var(--dur-fast) ease-out,color var(--dur-fast) ease-out,background var(--dur-fast) ease-out;
-}
-.f-chip i{font-family:var(--font-mono);font-style:normal;font-size:10px;color:var(--faint);letter-spacing:.05em}
-.f-chip:hover{border-color:var(--ink);color:var(--ink)}
-.f-chip.active{background:var(--ink);border-color:var(--ink);color:#f6efe0}
-.f-chip.active i{color:#b9ae9a}
-
-/* ============ 栏目分组 ============ */
-.group{margin-bottom:30px}
-.group-head{display:flex;align-items:center;gap:10px;margin-bottom:13px}
-.g-no{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--faint)}
-.g-sq{width:9px;height:9px;background:var(--cc);flex:0 0 auto}
-.group-head h2{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:.05em;color:var(--ink)}
-.g-count{font-family:var(--font-mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
-.g-rule{flex:1;border-top:1px solid var(--line)}
-
-/* ============ 活动卡片 ============ */
-.card{
-  position:relative;display:grid;grid-template-columns:1fr auto;column-gap:16px;row-gap:6px;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);
-  box-shadow:var(--shadow-1),inset 3px 0 0 var(--cc);
-  padding:15px 18px 13px;margin-bottom:12px;
-  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);
-}
-.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-2),inset 3px 0 0 var(--cc)}
-.card:hover .card-title{color:var(--cc)}
-.card-side{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-.card-title{grid-column:1;grid-row:1;font-family:var(--font-display);font-weight:600;font-size:15.5px;line-height:1.5;color:var(--ink);transition:color var(--dur-fast) ease-out}
-.card-meta{grid-column:1;grid-row:2;font-family:var(--font-mono);font-size:11px;letter-spacing:.03em;color:var(--muted);line-height:1.7}
-.card-meta i{font-style:normal;color:var(--faint);padding:0 2px}
-.card-desc{grid-column:1 / -1;font-size:13px;line-height:1.85;color:var(--ink-2);margin-top:3px}
-.card-foot{
-  grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;gap:10px;
-  margin-top:9px;padding-top:9px;border-top:1px dashed var(--line-soft);flex-wrap:wrap;
-}
-
-/* 分类徽标 / 邮票式截止章 / 提示 / 票价 */
-.cat-badge{
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;font-weight:500;
-  color:var(--cc);background:var(--cc-soft);border-radius:var(--radius-sm);padding:3px 9px;white-space:nowrap;
-}
-.stamp{
-  font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;white-space:nowrap;
-  color:var(--accent);border:1.5px solid var(--accent);border-radius:3px;
-  padding:2px 8px;background:var(--paper);transform:rotate(-2deg);
-}
-.stamp.hot{background:var(--accent);color:#fdf3e8}
-.alert{font-family:var(--font-mono);font-size:11px;letter-spacing:.05em;color:var(--accent);font-weight:500}
-.price-tag{
-  font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--ink-2);
-  background:var(--paper-deep);border-radius:var(--radius-sm);padding:3px 9px;
-}
-
-/* ============ 空 / 加载态 ============ */
-.empty{
-  border:1px dashed var(--line);border-radius:var(--radius-md);background:var(--card);
-  color:var(--muted);font-size:13px;text-align:center;padding:38px 16px;letter-spacing:.05em;
-}
-
-/* ============ 刊脚 ============ */
-.footer{margin-top:44px}
-.foot-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px}
-.foot-grid p{font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--ink)}
-.foot-grid span{display:block;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);margin-top:5px;font-weight:400}
-.foot-right{text-align:right}
-.foot-note{
-  margin-top:20px;text-align:center;font-family:var(--font-mono);font-size:10px;
-  letter-spacing:.14em;color:var(--faint);line-height:1.8;
-}
-
-#top{
-  position:fixed;right:16px;bottom:20px;width:44px;height:44px;border-radius:var(--radius-md);
-  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-1);
-  color:var(--ink);font-size:17px;cursor:pointer;display:none;z-index:60;
-  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);
-}
-#top:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
-
-/* ============ 响应式 ============ */
-@media (max-width:860px){
-  .mast-main{grid-template-columns:1fr}
-  .mast-stats{width:100%}
-  .mast-seal{width:48px;height:48px;font-size:16px}
-}
-@media (max-width:640px){
-  .wrap{padding:22px 14px 64px}
-  .lead-item{grid-template-columns:1fr;gap:14px}
-  .lead-date{flex-direction:row;align-items:baseline;gap:10px;padding:9px 12px}
-  .ld-days{margin-top:0}
-  .picks-grid{grid-template-columns:1fr}
-  .card-side{grid-column:1 / -1;grid-row:2;flex-direction:row;align-items:center}
-  .card-meta{grid-row:3}
-  .f-chip{min-height:44px}
-  .foot-right{text-align:left}
-}
-
-/* ============ 动效降级 ============ */
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
-  .reveal{opacity:1;transform:none}
-  .ticker-track{animation:none}
-  html{scroll-behavior:auto}
-}
-</style>
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="assets/app.css?v=2">
+<link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
-<div class="wrap">
 
-  <!-- 报头：刊名 + 期号 + 今日数据 + 城市版本 -->
-  <header class="masthead">
-    <div class="mast-row reveal d1">
-      <span class="mast-en">CITY EVENTS GAZETTE</span>
-      <span class="mast-date" id="mastDate"></span>
-      <span class="mast-issue" id="mastIssue"></span>
+<!-- ============ 固定顶栏 ============ -->
+<header class="topbar" id="topbar">
+  <div class="topbar-row">
+    <a class="brand" href="#top" aria-label="城市活动晨报，回到顶部">
+      <span class="brand-mark" aria-hidden="true">晨</span>
+      <span class="brand-txt"><b>城市活动晨报</b><i>CITY WANDER</i></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="板块导航"></nav>
+    <nav class="citynav" id="citynav" aria-label="切换城市"></nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="searchBtn" type="button" aria-label="搜索活动" aria-expanded="false">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+      </button>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="切换深色模式" aria-pressed="false">
+        <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg>
+      </button>
     </div>
-    <div class="mast-seal" aria-hidden="true"><span>日</span><span>更</span></div>
-    <div class="mast-main">
-      <div class="mast-titles reveal d2">
-        <p class="kicker" id="cityKicker"></p>
-        <h1>城市活动<span class="ink-accent">晨报</span></h1>
-        <p class="mast-sub" id="mastSub"></p>
-      </div>
-      <aside class="mast-stats reveal d3" id="stats" aria-label="今日数据"></aside>
-    </div>
-    <div class="rule-double reveal d3"></div>
-    <nav class="mast-cities reveal d4" id="cities" aria-label="城市版本"></nav>
-  </header>
+  </div>
+  <div class="tabs-row"><nav class="tabs" id="tabs" aria-label="板块导航（移动端）"></nav></div>
+  <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+</header>
 
-  <!-- 号外：今日截止 / 花期预警快讯 -->
-  <div class="ticker reveal d4" id="ticker" aria-label="号外快讯"></div>
-
-  <!-- 头版：本周必去 -->
-  <section class="lead reveal d5" id="lead" aria-labelledby="leadTitle"></section>
-
-  <!-- 栏目导航 -->
-  <nav class="filters" id="filters" aria-label="栏目导航"></nav>
-
-  <!-- 栏目列表 -->
-  <main id="list"></main>
-
-  <!-- 刊脚 -->
-  <footer class="footer">
-    <div class="rule-double"></div>
-    <div class="foot-grid">
-      <p>城市活动晨报 · 多城版<span>自动化采编 · 每日 08:00 付印</span></p>
-      <p class="foot-right">数据截至 <span style="display:inline;font-family:var(--font-mono)" id="footDate"></span><span>本期 <b id="footCount" style="color:var(--ink)"></b> 条 · 城市选择自动记忆</span></p>
-    </div>
-    <p class="foot-note">活动信息以各主办方公告为准 · 出行前请再次确认场次与开放时间</p>
-  </footer>
+<!-- ============ 搜索浮层 ============ -->
+<div class="search-panel" id="searchPanel">
+  <div class="sp-inner wrap">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+    <input id="q" type="search" placeholder="搜活动、场馆、关键词…" autocomplete="off" spellcheck="false" aria-label="搜索活动">
+    <span class="sp-count" id="spCount" aria-hidden="true"></span>
+    <button class="sp-clear" id="qClear" type="button" hidden>清除</button>
+    <button class="sp-close" id="qClose" type="button">关闭 · Esc</button>
+  </div>
 </div>
+<div class="search-backdrop" id="searchBackdrop" hidden></div>
 
-<button id="top" title="回到顶部" aria-label="回到顶部">↑</button>
+<main id="top">
+  <!-- ============ 城市封面（随页面滚动收起） ============ -->
+  <section class="banner" id="banner" aria-labelledby="cityName">
+    <div class="banner-media">
+      <img id="heroImg" src="assets/city-gz.jpg" alt="广州城市照片" fetchpriority="high" decoding="async" onerror="this.style.opacity=0">
+    </div>
+    <div class="banner-inner wrap">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span><span id="kicker">正在翻阅</span></p>
+      <h1 id="cityName">城市</h1>
+      <p class="banner-en" id="cityEn">CITY</p>
+      <p class="banner-lead" id="heroLead"></p>
+      <a class="scroll-cue" href="#browse" aria-label="跳到活动列表">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5.5 12.5 12 19l6.5-6.5"/></svg>
+      </a>
+    </div>
+    <p class="banner-credit">图 / Wikimedia Commons</p>
+  </section>
+
+  <div class="container wrap">
+    <!-- ============ 主栏 ============ -->
+    <main class="main" id="browse">
+      <div class="list-head">
+        <div class="lh-title">
+          <span class="sec-no">01</span>
+          <h2 id="allTitle">全部活动</h2>
+          <span class="sec-en" id="allEn">all events</span>
+        </div>
+        <span class="sec-count" id="allCount"></span>
+      </div>
+
+      <div class="resultbar">
+        <p class="result" id="result" aria-live="polite"></p>
+        <div class="mini-filters">
+          <button class="mini" id="freeBtn" type="button" data-free aria-pressed="false">免费</button>
+          <button class="mini" id="favBtn" type="button" data-favonly aria-pressed="false">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A4.1 4.1 0 0 1 12 7.6 4.1 4.1 0 0 1 19 10.7C19 15.6 12 20 12 20Z"/></svg>
+            收藏 <b id="favN">0</b>
+          </button>
+        </div>
+      </div>
+
+      <div class="groups" id="groups">
+        <div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>
+      </div>
+    </main>
+
+    <!-- ============ 侧栏 ============ -->
+    <aside class="sidebar" aria-label="城市与筛选">
+      <section class="widget author" id="authorCard"></section>
+      <section class="widget">
+        <h3 class="widget-title">板块 <span id="catCount"></span></h3>
+        <div class="widget-body"><ul class="cat-list" id="catList"></ul></div>
+      </section>
+      <section class="widget">
+        <h3 class="widget-title">区域 <span>标签</span></h3>
+        <div class="widget-body"><div class="tagcloud" id="tagCloud"></div></div>
+      </section>
+      <section class="widget">
+        <h3 class="widget-title">最近截止 <span>7 天内</span></h3>
+        <div class="widget-body"><ul class="mini-list" id="miniList"></ul></div>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<!-- ============ 页脚 ============ -->
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <span class="foot-mark" aria-hidden="true">晨</span>
+      <div>
+        <h2>城市活动晨报</h2>
+        <p class="f-sub">City Wander · 城市漫游手册</p>
+      </div>
+    </div>
+    <div class="foot-side">
+      数据更新 <b id="footUpdated">—</b><br>
+      每天 08:00 自动更新 · 多城同步
+    </div>
+  </div>
+  <p class="foot-note">活动信息以各主办方最新公告为准，出行前请再确认一次场次与开放时间。点开任意活动可看详情、查地图。</p>
+</footer>
+
+<button class="totop" id="totop" type="button" aria-label="回到顶部">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>
+</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
-/* ============ 栏目定义（六分类 + 全部，顺序即版面顺序）============ */
-const CATS = [
-  {key:"all",        name:"全部",     no:""},
-  {key:"exhibition", name:"展览",     no:"01", color:"#5d4a8c", soft:"#ece7f5"},
-  {key:"market",     name:"会展市集", no:"02", color:"#b03a2e", soft:"#f7e6e2"},
-  {key:"outdoor",    name:"户外赏花", no:"03", color:"#2e7d5b", soft:"#e4f0e9"},
-  {key:"preview",    name:"提前预告", no:"04", color:"#1f6f8b", soft:"#e3eff3"},
-  {key:"bloom",      name:"花期预警", no:"05", color:"#96560d", soft:"#f4ead9"},
-  {key:"night",      name:"夜游推荐", no:"06", color:"#46568c", soft:"#e8ebf4"}
+(function () {
+
+/* ======================================================================
+   1. 常量与状态
+   ====================================================================== */
+var DATA_BASE = "data";
+var ASSET = "assets";
+var FAV_KEY = "city-events-favs";
+var CITY_KEY = "city-events-city";
+var THEME_KEY = "city-events-theme";
+var PAGE_SIZE = 12;
+var DAY = 86400000;
+
+var CATS = [
+  { key: "exhibition", name: "展览",     en: "Exhibition" },
+  { key: "market",     name: "会展市集", en: "Market" },
+  { key: "outdoor",    name: "户外赏花", en: "Outdoor" },
+  { key: "preview",    name: "提前预告", en: "Upcoming" },
+  { key: "bloom",      name: "花期预警", en: "Bloom" },
+  { key: "night",      name: "夜游推荐", en: "Night" }
 ];
-const CAT_MAP = {};
-CATS.forEach(c => { CAT_MAP[c.key] = c; });
+var CAT_BY = {};
+CATS.forEach(function (c) { CAT_BY[c.key] = c; });
 
-const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g,
-  m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+/* 顶栏菜单 = 全部 + 本周必去 + 六大板块 */
+var MENU = [{ key: "all", name: "全部" }, { key: "top", name: "本周必去" }].concat(
+  CATS.map(function (c) { return { key: c.key, name: c.name }; })
+);
 
-/* ============ 多城数据加载 =====
-   城市注册表 data/cities.json : [{"key":"gz","name":"广州","en":"GUANGZHOU"}, ...]
-   活动数据   data/events-<key>.json : {"updated":"YYYY-MM-DD","items":[{...}, ...]}
-   新增城市只需在 cities.json 追加一行；数据文件就绪前显示采集中。 */
-const DATA_BASE = "data";
-const cityIndex = [];
-const dataCache = {};
-const updatedCache = {};
-let current = "all";
-let currentCity = null;
+var CITY_NOTES = {
+  gz: "珠江两岸的展览、骑楼下的市集、白云山下的花期。",
+  sz: "海边的日落、创意园的展览、湾区的夜。",
+  cs: "湘江边的烟火、岳麓山下的书院、五一广场的夜宵。"
+};
 
-function curCity(){
-  return cityIndex.find(x => x.key === currentCity) || cityIndex[0] || null;
-}
-function curEvents(){
-  return dataCache[currentCity] || [];
-}
-function pending(){
-  return dataCache[currentCity] === null || dataCache[currentCity] === undefined;
-}
+var state = { city: null, cat: "all", q: "", free: false, fav: false, area: "", page: 1 };
+var cityIndex = [];
+var cache = {};
+var updated = {};
+var favSet = new Set();
 
-/* ============ 日期工具 ============ */
-function today(){ const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
-function daysLeft(end){
-  if(!end) return null;
-  const p = String(end).split("-");
-  if(p.length !== 3) return null;
-  const d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
-  return Math.round((d - today()) / 86400000);
+/* ======================================================================
+   2. 工具
+   ====================================================================== */
+function $(sel, root) { return (root || document).querySelector(sel); }
+function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (m) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m];
+  });
 }
-function live(item){ const d = daysLeft(item.end); return d === null || d >= 0; }
-function pad(n){ return n < 10 ? "0" + n : "" + n; }
-function fmtDate(){ const d = new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
-function shortEnd(end){
-  if(!end) return "—";
-  const p = String(end).split("-");
-  return Number(p[1]) + "." + Number(p[2]);
+function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+function todayDate() { var d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function parseEnd(s) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ""));
+  return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
 }
-
-/* ============ 启动 ============ */
-async function boot(){
-  const box = document.getElementById("list");
-  box.innerHTML = '<div class="empty">正在取版，请稍候…</div>';
+function daysLeft(end) {
+  var d = parseEnd(end);
+  return d ? Math.round((d - todayDate()) / DAY) : null;
+}
+function shortEnd(end) {
+  var d = parseEnd(end);
+  return d ? (d.getMonth() + 1) + "." + d.getDate() : "长期";
+}
+function dateCn() {
+  var d = new Date();
+  return (d.getMonth() + 1) + " 月 " + d.getDate() + " 日 · 周" + "日一二三四五六".charAt(d.getDay());
+}
+function issueNo() {
+  var n = new Date();
+  return Math.floor((n - new Date(n.getFullYear(), 0, 1)) / DAY) + 1;
+}
+function prefersReduce() {
+  return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+}
+function highlight(raw) {
+  var text = String(raw == null ? "" : raw);
+  var q = state.q.trim();
+  if (!q) return esc(text);
+  var safe = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  var parts;
+  try { parts = text.split(new RegExp("(" + safe + ")", "gi")); }
+  catch (e) { return esc(text); }
+  var out = "";
+  for (var i = 0; i < parts.length; i++) {
+    out += i % 2 ? "<mark>" + esc(parts[i]) + "</mark>" : esc(parts[i]);
+  }
+  return out;
+}
+function loadFavs() {
   try {
-    const r = await fetch(DATA_BASE + "/cities.json", {cache: "no-store"});
-    if(!r.ok) throw new Error("HTTP " + r.status);
-    const j = await r.json();
-    if(Array.isArray(j)) cityIndex.push.apply(cityIndex, j);
-  } catch(e) {
-    box.innerHTML = '<div class="empty">城市列表加载失败，请刷新重试</div>';
+    var arr = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
+    if (Array.isArray(arr)) favSet = new Set(arr.filter(function (x) { return typeof x === "string"; }));
+  } catch (e) { favSet = new Set(); }
+}
+function saveFavs() { try { localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(favSet))); } catch (e) {} }
+function favId(it) { return state.city + "\u0001" + it.title; }
+function isFav(it) { return favSet.has(favId(it)); }
+function detailURL(it) {
+  return "detail.html?city=" + encodeURIComponent(state.city) + "&t=" + encodeURIComponent(it.title);
+}
+
+/* ======================================================================
+   3. 数据
+   ====================================================================== */
+function getJSON(url) {
+  return fetch(url, { cache: "no-store" }).then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  });
+}
+function liveItems() {
+  var list = cache[state.city];
+  if (!Array.isArray(list)) return [];
+  return list.filter(function (it) { var d = daysLeft(it.end); return d === null || d >= 0; });
+}
+function isBroken() { return cache[state.city] === null; }
+function curCity() {
+  for (var i = 0; i < cityIndex.length; i++) if (cityIndex[i].key === state.city) return cityIndex[i];
+  return null;
+}
+function loadCity(key) {
+  if (key in cache) return Promise.resolve();
+  return getJSON(DATA_BASE + "/events-" + key + ".json").then(function (j) {
+    cache[key] = Array.isArray(j) ? j : (j && Array.isArray(j.items) ? j.items : []);
+    updated[key] = (j && j.updated) || "";
+  }).catch(function () {
+    cache[key] = null;
+    updated[key] = "";
+  });
+}
+
+/* ======================================================================
+   4. 筛选
+   ====================================================================== */
+function isTopFilter() { return state.cat === "top"; }
+function matches(it) {
+  if (isTopFilter()) { if (!it.top) return false; }
+  else if (state.cat !== "all" && it.cat !== state.cat) return false;
+  if (state.area && it.area !== state.area) return false;
+  if (state.free && !/免费/.test(it.price || "")) return false;
+  if (state.fav && !isFav(it)) return false;
+  var q = state.q.trim().toLowerCase();
+  if (q) {
+    var hay = [it.title, it.venue, it.area, it.price, it.desc, it.date].join(" ").toLowerCase();
+    if (hay.indexOf(q) < 0) return false;
+  }
+  return true;
+}
+function filtered() {
+  return !!(state.q.trim() || state.free || state.fav || state.area || state.cat !== "all");
+}
+function sortByEnd(arr) {
+  return arr.slice().sort(function (a, b) {
+    var ae = a.end ? 0 : 1, be = b.end ? 0 : 1;
+    if (ae !== be) return ae - be;
+    if (!a.end) return 0;
+    return a.end < b.end ? -1 : a.end > b.end ? 1 : 0;
+  });
+}
+
+/* ======================================================================
+   5. 渲染：顶栏菜单
+   ====================================================================== */
+function menuHTML() {
+  return MENU.map(function (m) {
+    var on = state.cat === m.key;
+    return '<button type="button" class="menu-item' + (on ? " on" : "") + '" data-menu="' + m.key +
+      '" aria-current="' + (on ? "page" : "false") + '">' + esc(m.name) + "</button>";
+  }).join("");
+}
+function renderMenu() {
+  $("#menu").innerHTML = menuHTML();
+  $("#tabs").innerHTML = menuHTML();
+}
+
+function renderCityNav() {
+  var el = $("#citynav");
+  el.innerHTML = cityIndex.map(function (c) {
+    return '<button type="button" class="city-pill" data-city="' + esc(c.key) + '" aria-pressed="' +
+      (c.key === state.city ? "true" : "false") + '">' + esc(c.name) + "</button>";
+  }).join("");
+}
+
+/* ======================================================================
+   6. 渲染：封面 + 侧栏
+   ====================================================================== */
+function renderBanner() {
+  var c = curCity();
+  if (!c) return;
+  var items = liveItems();
+  $("#kicker").textContent = c.en + " · " + dateCn() + " · 第 " + issueNo() + " 期";
+  $("#cityName").textContent = c.name;
+  $("#cityEn").textContent = c.en;
+  var note = CITY_NOTES[c.key] || "展览、市集、赏花、演出与夜游。";
+  $("#heroLead").innerHTML = '<span class="lead-note">' + esc(note) +
+    '</span> <span class="lead-count">这周有 <b id="heroCount">' + items.length + "</b> 个地方值得出门。</span>";
+    var img = $("#heroImg");
+  img.alt = c.name + "城市照片";
+  var src = ASSET + "/city-" + c.key + ".jpg";
+  if (img.getAttribute("src") !== src) {
+    img.style.opacity = "0";
+    var pre = new Image();
+    pre.onload = function () { img.src = src; img.style.opacity = "1"; };
+    pre.onerror = function () { img.style.opacity = "1"; };
+    pre.src = src;
+  }
+  document.title = c.name + "这周去哪 · " + items.length + " 个去处 ｜ 城市活动晨报";
+  $("#footUpdated").textContent = updated[state.city] || "—";
+}
+
+function renderSidebar() {
+  var c = curCity();
+  if (!c) return;
+  var items = liveItems();
+  var topN = 0, freeN = 0;
+  items.forEach(function (it) {
+    if (it.top) topN++;
+    if (/免费/.test(it.price || "")) freeN++;
+  });
+
+  $("#authorCard").innerHTML =
+    '<div class="author-cover">' +
+      '<img src="' + ASSET + "/city-" + esc(c.key) + '-640.jpg" alt="' + esc(c.name) + '城市照片" loading="lazy" onerror="this.style.display=\'none\'">' +
+      '<span class="a-tag">正在浏览</span>' +
+    "</div>" +
+    '<div class="author-body">' +
+      "<h3>" + esc(c.name) + "</h3>" +
+      '<p class="author-sub">' + esc(c.en) + " · 第 " + issueNo() + " 期</p>" +
+      '<p class="author-desc">' + esc(CITY_NOTES[c.key] || "城市漫游手册，每天 08:00 更新。") + "</p>" +
+      '<div class="author-stats">' +
+        "<div><b>" + items.length + "</b><span>个去处</span></div>" +
+        "<div><b>" + topN + "</b><span>本周必去</span></div>" +
+        "<div><b>" + freeN + "</b><span>免费</span></div>" +
+      "</div>" +
+      '<div class="city-switch" id="citySwitch">' + cityIndex.map(function (x) {
+        return '<button type="button" data-city="' + esc(x.key) + '" aria-pressed="' +
+          (x.key === c.key ? "true" : "false") + '">' + esc(x.name) + "</button>";
+      }).join("") + "</div>" +
+    "</div>";
+
+  var counts = {};
+  items.forEach(function (it) { counts[it.cat] = (counts[it.cat] || 0) + 1; });
+  $("#catCount").textContent = items.length + " 条";
+  $("#catList").innerHTML =
+    '<li><button type="button" data-menu="all" class="' + (state.cat === "all" ? "on" : "") + '">' +
+      '<span class="cdot" style="background:var(--muted)"></span>全部<b>' + items.length + "</b></button></li>" +
+    '<li><button type="button" data-menu="top" class="' + (isTopFilter() ? "on" : "") + '">' +
+      '<span class="cdot" style="background:var(--accent)"></span>本周必去<b>' + topN + "</b></button></li>" +
+    CATS.map(function (cat) {
+      return '<li class="cat-' + cat.key + '"><button type="button" data-menu="' + cat.key + '" class="' +
+        (state.cat === cat.key ? "on" : "") + '"><span class="cdot"></span>' + esc(cat.name) +
+        "<b>" + (counts[cat.key] || 0) + "</b></button></li>";
+    }).join("");
+
+  var areas = {};
+  items.forEach(function (it) { if (it.area) areas[it.area] = (areas[it.area] || 0) + 1; });
+  var topAreas = Object.keys(areas).sort(function (a, b) { return areas[b] - areas[a]; }).slice(0, 14);
+  $("#tagCloud").innerHTML = topAreas.length
+    ? topAreas.map(function (a) {
+        return '<button type="button" class="tag' + (state.area === a ? " on" : "") + '" data-area="' +
+          esc(a) + '">' + esc(a) + "<i>" + areas[a] + "</i></button>";
+      }).join("")
+    : '<span style="font-size:11.5px;color:var(--muted)">本期数据还没标区域</span>';
+
+  var soon = items.filter(function (it) {
+    var d = daysLeft(it.end);
+    return d !== null && d >= 0 && d <= 7;
+  }).sort(function (a, b) { return a.end < b.end ? -1 : 1; }).slice(0, 5);
+  $("#miniList").innerHTML = soon.length ? soon.map(function (it) {
+    return '<li><a href="' + detailURL(it) + '" target="_blank" rel="noopener">' +
+      '<span class="mini-date">' + esc(shortEnd(it.end)) + "</span>" +
+      '<span class="mini-title">' + esc(it.title) + "</span></a></li>";
+  }).join("") : '<li style="padding:8px 0;font-size:11.5px;color:var(--muted)">7 天内没有截止的活动</li>';
+}
+
+/* ======================================================================
+   7. 渲染：列表 + 分页
+   ====================================================================== */
+function countdownChip(it) {
+  var d = daysLeft(it.end);
+  if (d === null || d < 0) return "";
+  if (d === 0) return '<span class="chip-days">今天截止</span>';
+  if (d === 1) return '<span class="chip-days">明天截止</span>';
+  if (d <= 7) return '<span class="chip-days">剩 ' + d + " 天</span>";
+  return '<span class="chip-days soon">剩 ' + d + " 天</span>";
+}
+function favBtn(it) {
+  var on = isFav(it);
+  return '<button class="fav" type="button" data-fav="' + esc(it.title) + '"' +
+    ' aria-pressed="' + (on ? "true" : "false") + '" aria-label="' + (on ? "取消收藏 " : "收藏 ") + esc(it.title) + '">' +
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M12 20s-7-4.4-7-9.3A4.1 4.1 0 0 1 12 7.6 4.1 4.1 0 0 1 19 10.7C19 15.6 12 20 12 20Z"/></svg></button>';
+}
+function priceTag(it) {
+  var p = it.price || "";
+  if (!p) return "";
+  return '<span class="price' + (/免费/.test(p) ? " free" : "") + '">' + esc(p) + "</span>";
+}
+
+function cardHTML(it, i) {
+  var c = CAT_BY[it.cat] || CATS[0];
+  var sold = /售罄/.test(it.alert || "");
+  var meta = [];
+  meta.push('<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>' + esc(it.date || "长期") + "</span>");
+  if (it.venue) meta.push('<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>' + esc(it.venue) + "</span>");
+  if (it.area) meta.push("<span>" + esc(it.area) + "</span>");
+
+  return '<article class="card cat-' + it.cat + (sold ? " is-sold" : "") + '" style="--i:' + Math.min(7, i) + '">' +
+    '<a class="card-hit" href="' + detailURL(it) + '" target="_blank" rel="noopener" aria-label="查看 ' + esc(it.title) + ' 详情"></a>' +
+    '<div class="card-main">' +
+      '<div class="card-top">' +
+        '<span class="chip-cat"><i style="width:6px;height:6px;border-radius:50%;background:var(--cc)"></i>' + esc(c.name) + "</span>" +
+        (it.alert ? '<span class="chip-alert">' + esc(it.alert) + "</span>" : "") +
+        countdownChip(it) +
+      "</div>" +
+      '<h3 class="card-title">' + highlight(it.title) + "</h3>" +
+      '<p class="card-meta">' + meta.join("") + "</p>" +
+      (it.desc ? '<p class="card-desc">' + esc(it.desc) + "</p>" : "") +
+    "</div>" +
+    '<div class="card-side">' + priceTag(it) +
+      '<span class="card-actions"><span class="go">看详情<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>' + favBtn(it) + "</span>" +
+    "</div>" +
+  "</article>";
+}
+
+function pagerHTML(page, pages) {
+  if (pages <= 1) return "";
+  var set = {};
+  [1, page - 1, page, page + 1, pages].forEach(function (p) {
+    if (p >= 1 && p <= pages) set[p] = 1;
+  });
+  var keys = Object.keys(set).map(Number).sort(function (a, b) { return a - b; });
+  var prev = 0, nums = "";
+  keys.forEach(function (p) {
+    if (prev && p - prev > 1) nums += '<span class="pg-gap" aria-hidden="true">…</span>';
+    nums += '<button class="pg-num' + (p === page ? " on" : "") + '" type="button" data-page="' + p +
+      '" aria-current="' + (p === page ? "page" : "false") + '" aria-label="第 ' + p + ' 页">' + p + "</button>";
+    prev = p;
+  });
+  return '<nav class="pager" aria-label="分页">' +
+    '<button class="pg-btn" type="button" data-page="' + (page - 1) + '"' + (page <= 1 ? " disabled" : "") + '>上一页</button>' +
+    '<span class="pg-nums">' + nums + "</span>" +
+    '<span class="pg-now">' + page + " / " + pages + "</span>" +
+    '<button class="pg-btn" type="button" data-page="' + (page + 1) + '"' + (page >= pages ? " disabled" : "") + '>下一页</button>' +
+    "</nav>";
+}
+
+function renderHead(list) {
+  var name = "全部活动", en = "all events";
+  if (isTopFilter()) { name = "本周必去"; en = "this week"; }
+  else if (state.cat !== "all" && CAT_BY[state.cat]) { name = CAT_BY[state.cat].name; en = CAT_BY[state.cat].en; }
+  $("#allTitle").textContent = name;
+  $("#allEn").textContent = en;
+  $("#allCount").textContent = list.length + " 条";
+}
+
+function renderGroups() {
+  var box = $("#groups");
+  var all = liveItems();
+  var list = sortByEnd(all.filter(matches));
+  var pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  if (state.page > pages) state.page = pages;
+  if (state.page < 1) state.page = 1;
+  var page = state.page;
+  var slice = list.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  renderHead(list);
+
+  var extra = [];
+  if (state.area) extra.push('<button type="button" class="clear-area" data-clear-area>区域 · ' + esc(state.area) + " ✕</button>");
+  var sc = $("#spCount");
+  if (sc) sc.textContent = list.length + " 条";
+  $("#result").innerHTML = (filtered() ? "筛选出 " + list.length + " 条" : "共 " + list.length + " 条") +
+    (list.length ? " · 第 " + page + " / " + pages + " 页 · 按截止时间由近到远 " : "") + extra.join("");
+
+  if (isBroken()) {
+    box.innerHTML = '<div class="empty"><b>这个城市版暂时没取到</b><p>数据文件加载失败，刷新一次试试</p>' +
+      '<button type="button" data-retry>重新加载</button></div>';
     return;
   }
-  if(cityIndex.length === 0){
-    box.innerHTML = '<div class="empty">尚未配置任何城市</div>';
+  if (list.length === 0) {
+    box.innerHTML = '<div class="empty"><b>没有匹配的活动</b><p>' +
+      (state.fav ? "收藏夹还是空的，点卡片右侧的爱心存一条" : "换个关键词，或清空筛选看看全部 " + all.length + " 条") +
+      '</p><button type="button" data-reset>清空筛选</button></div>';
     return;
   }
-  let key = "";
-  try {
-    const q = new URLSearchParams(location.search).get("city");
-    if(q && cityIndex.some(c => c.key === q)) key = q;
-  } catch(e) {}
-  if(!key){
-    try {
-      const saved = localStorage.getItem("events-city");
-      if(saved && cityIndex.some(c => c.key === saved)) key = saved;
-    } catch(e) {}
-  }
-  if(!key) key = cityIndex[0].key;
-  currentCity = key;
-  renderCities();
-  renderFilters();
-  renderMast();
-  renderTicker();
-  renderLead();
-  renderList();
-  document.querySelectorAll(".masthead .reveal").forEach(el => el.classList.add("in"));
-  await loadCity(key);
+
+  box.innerHTML = '<div class="cards">' +
+    slice.map(function (it, i) { return cardHTML(it, i); }).join("") +
+    "</div>" + pagerHTML(page, pages);
 }
 
-async function loadCity(key){
-  if(!(key in dataCache)){
-    try {
-      const r = await fetch(DATA_BASE + "/events-" + key + ".json", {cache: "no-store"});
-      if(!r.ok) throw new Error("HTTP " + r.status);
-      const j = await r.json();
-      dataCache[key] = Array.isArray(j) ? j : (j && Array.isArray(j.items) ? j.items : []);
-      updatedCache[key] = (j && j.updated) || "";
-    } catch(e) {
-      dataCache[key] = null;
+function renderAll() {
+  renderMenu();
+  renderCityNav();
+  renderBanner();
+  renderSidebar();
+  renderGroups();
+  applyFavLabels();
+  syncMini();
+}
+
+/* ======================================================================
+   8. 交互
+   ====================================================================== */
+function setFilter(patch) {
+  Object.keys(patch).forEach(function (k) { state[k] = patch[k]; });
+  state.page = 1;
+  renderMenu();
+  renderSidebar();
+  renderGroups();
+  syncMini();
+}
+function gotoList() {
+  var b = $("#browse");
+  if (!b) return;
+  var top = b.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--stick"), 10) || 64) - 10;
+  window.scrollTo({ top: Math.max(0, top), behavior: prefersReduce() ? "auto" : "smooth" });
+}
+
+function switchCity(key) {
+  if (key === state.city) return;
+  state.city = key;
+  state.cat = "all"; state.q = ""; state.free = false; state.fav = false; state.area = ""; state.page = 1;
+  syncQuery();
+  try { localStorage.setItem(CITY_KEY, key); } catch (e) {}
+  $("#groups").innerHTML = '<div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>';
+  syncSearchUI();
+  loadCity(key).then(function () {
+    renderAll();
+    var y = window.scrollY || window.pageYOffset || 0;
+    if (y > window.innerHeight * 0.6) gotoList();
+  });
+}
+function syncQuery() {
+  try { history.replaceState(null, "", state.city ? "?city=" + state.city : location.pathname); } catch (e) {}
+}
+function toggleFav(title, silent) {
+  var key = state.city + "\u0001" + title;
+  var on = favSet.has(key);
+  if (on) favSet.delete(key); else favSet.add(key);
+  saveFavs();
+  applyFavLabels();
+  var n = 0;
+  liveItems().forEach(function (it) { if (isFav(it)) n++; });
+  syncMini();
+  if (!silent) toast(on ? "已取消收藏" : "已收藏 · 共 " + n + " 条");
+  if (state.fav) renderGroups();
+}
+function applyFavLabels() {
+  $$("[data-fav]").forEach(function (btn) {
+    var title = btn.getAttribute("data-fav");
+    var on = favSet.has(state.city + "\u0001" + title);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-label", (on ? "取消收藏 " : "收藏 ") + title);
+  });
+}
+function syncMini() {
+  var n = 0;
+  liveItems().forEach(function (it) { if (isFav(it)) n++; });
+  $("#favN").textContent = n;
+  $("#freeBtn").setAttribute("aria-pressed", state.free ? "true" : "false");
+  $("#favBtn").setAttribute("aria-pressed", state.fav ? "true" : "false");
+  $("#favBtn").style.color = state.fav ? "var(--accent)" : "";
+  $("#favBtn").style.borderColor = state.fav ? "currentColor" : "";
+}
+var toastTimer = null;
+function toast(msg) {
+  var el = $("#toast");
+  el.textContent = msg;
+  el.classList.add("on");
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { el.classList.remove("on"); }, 1900);
+}
+function syncSearchUI() {
+  var q = $("#q");
+  if (q.value !== state.q) q.value = state.q;
+  $("#qClear").hidden = !state.q;
+}
+function setQuery(v) {
+  state.q = v;
+  syncSearchUI();
+  state.page = 1;
+  renderGroups();
+}
+function resetFilters() {
+  state.cat = "all"; state.q = ""; state.free = false; state.fav = false; state.area = ""; state.page = 1;
+  syncSearchUI(); renderMenu(); renderSidebar(); renderGroups(); syncMini();
+}
+
+/* 搜索浮层 */
+function openSearch() {
+  $("#searchPanel").classList.add("on");
+  $("#searchBackdrop").hidden = false;
+  document.body.classList.add("search-open");
+  $("#searchBtn").setAttribute("aria-expanded", "true");
+  setTimeout(function () { $("#q").focus(); }, 60);
+}
+function closeSearch() {
+  $("#searchPanel").classList.remove("on");
+  $("#searchBackdrop").hidden = true;
+  document.body.classList.remove("search-open");
+  $("#searchBtn").setAttribute("aria-expanded", "false");
+}
+
+function bind() {
+  document.addEventListener("click", function (e) {
+    var menuBtn = e.target.closest("[data-menu]");
+    if (menuBtn) {
+      setFilter({ cat: menuBtn.getAttribute("data-menu") });
+      closeSearch();
+      gotoList();
+      return;
     }
-  }
-  renderMast();
-  renderTicker();
-  renderLead();
-  renderList();
-  observeReveals();
-}
+    var cityBtn = e.target.closest("[data-city]");
+    if (cityBtn) { switchCity(cityBtn.getAttribute("data-city")); return; }
+    var areaBtn = e.target.closest("[data-area]");
+    if (areaBtn) {
+      var a = areaBtn.getAttribute("data-area");
+      setFilter({ area: state.area === a ? "" : a });
+      if (state.area) gotoList();
+      return;
+    }
+    if (e.target.closest("[data-clear-area]")) { setFilter({ area: "" }); return; }
+    if (e.target.closest("[data-free]")) { setFilter({ free: !state.free }); return; }
+    if (e.target.closest("[data-favonly]")) { setFilter({ fav: !state.fav }); return; }
 
-/* ============ 报头 ============ */
-function renderMast(){
-  const c = curCity();
-  if(!c) return;
-  const p = pending();
-  const items = p ? [] : curEvents().filter(live);
-  document.title = c.name + "热门活动日报 ｜ 城市活动晨报";
-  document.getElementById("cityKicker").textContent = "多城活动日报 · " + c.name + "版";
-  document.getElementById("mastSub").textContent = c.en + " · DAILY · 每日 08:00 自动更新";
+    var fav = e.target.closest("[data-fav]");
+    if (fav) { toggleFav(fav.getAttribute("data-fav")); return; }
 
-  const now = new Date();
-  const week = "日一二三四五六".charAt(now.getDay());
-  document.getElementById("mastDate").textContent =
-    now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 星期" + week;
-  const issue = Math.floor((now - new Date(now.getFullYear(), 0, 1)) / 86400000) + 1;
-  document.getElementById("mastIssue").textContent = "第 " + issue + " 期";
-
-  const soon = items.filter(e => { const d = daysLeft(e.end); return d !== null && d >= 0 && d <= 7; }).length;
-  const picks = items.filter(e => e.top).length;
-  const cats = CATS.filter(c2 => c2.key !== "all" && items.some(e => e.cat === c2.key)).length;
-  document.getElementById("stats").innerHTML =
-    '<div class="st-head">今 日 数 据</div>' +
-    statRow("本期收录", p ? null : items.length) +
-    statRow("本周必去", p ? null : picks) +
-    statRow("7 日内截止", p ? null : soon) +
-    statRow("覆盖栏目", p ? null : cats, "类") +
-    '<div class="st-foot">数据更新于 ' + (p ? "—" : (updatedCache[currentCity] || fmtDate())) + '</div>';
-
-  document.getElementById("footDate").textContent = p ? "—" : (updatedCache[currentCity] || fmtDate());
-  document.getElementById("footCount").textContent = p ? "—" : items.length;
-}
-function statRow(label, num, unit){
-  const v = num === null ? "—" : num + (unit ? '<i>' + unit + '</i>' : '<i>条</i>');
-  return '<div class="stat-row"><span class="stat-label">' + label + '</span>' +
-    '<span class="stat-num">' + v + '</span></div>';
-}
-
-/* ============ 号外 ============ */
-function renderTicker(){
-  const box = document.getElementById("ticker");
-  const items = curEvents().filter(live);
-  const list = [];
-  const seen = {};
-  items.forEach(e => {
-    const d = daysLeft(e.end);
-    const hot = e.alert || (d !== null && d <= 2);
-    if(!hot || seen[e.title]) return;
-    seen[e.title] = 1;
-    list.push({ alert: e.alert || (d === 0 ? "今日截止" : ""), title: e.title, date: e.date || "" });
-  });
-  if(list.length === 0){ box.style.display = "none"; return; }
-  box.style.display = "";
-  const half = list.slice(0, 10).map(t =>
-    '<span class="tk"><i>「' + esc(t.alert) + '」</i><b>' + esc(t.title) + '</b><s>' + esc(t.date) + '</s></span>'
-  ).join('<span class="tk-sep">◆</span>');
-  box.innerHTML =
-    '<span class="ticker-label"><b>号外</b><em>EXTRA</em></span>' +
-    '<div class="ticker-view"><div class="ticker-track">' +
-    '<div class="tk-half">' + half + '</div><div class="tk-half">' + half + '</div>' +
-    '</div></div>';
-}
-
-/* ============ 头版 ============ */
-function renderLead(){
-  const box = document.getElementById("lead");
-  const picks = curEvents().filter(live).filter(e => e.top);
-  if(picks.length === 0){ box.style.display = "none"; return; }
-  box.style.display = "";
-  const first = picks[0];
-  const rest = picks.slice(1, 5);
-  const c = CAT_MAP[first.cat] || CATS[1];
-  const d = daysLeft(first.end);
-  const days = d !== null && d >= 0 ? (d === 0 ? '<span class="stamp hot" style="margin-top:6px">今天截止</span>'
-                                            : (d <= 7 ? '<span class="stamp" style="margin-top:6px">剩 ' + d + ' 天</span>' : "")) : "";
-  const meta = [first.date, first.venue, first.area, first.price].filter(Boolean).map(esc).join('<i>·</i>');
-
-  box.innerHTML =
-    '<div class="sec-head"><h2 id="leadTitle">头版 · 本周必去</h2>' +
-    '<span class="sec-en">TOP PICKS OF THE WEEK</span><span class="sec-rule"></span></div>' +
-    '<article class="lead-item" style="--cc:' + c.color + ';--cc-soft:' + c.soft + '">' +
-      '<div class="lead-date"><span class="ld-end">' + shortEnd(first.end) + '</span>' +
-      '<span class="ld-cap">截止</span>' + days + '</div>' +
-      '<div class="lead-body">' +
-        '<div class="lead-tags"><span class="cat-badge">' + c.name + '</span>' +
-        (first.alert ? '<span class="alert">「' + esc(first.alert) + '」</span>' : "") + '</div>' +
-        '<h3>' + esc(first.title) + '</h3>' +
-        '<p class="lead-meta">' + meta + '</p>' +
-        '<p class="lead-desc">' + esc(first.desc) + '</p>' +
-      '</div>' +
-    '</article>' +
-    '<div class="picks-grid">' +
-      rest.map((e, i) => {
-        const cc = CAT_MAP[e.cat] || CATS[1];
-        const m = [e.date, e.venue, e.price].filter(Boolean).map(esc).join('<i>·</i>');
-        return '<article class="pick-item" style="--cc:' + cc.color + '">' +
-          '<span class="pick-no">' + pad(i + 2) + '</span>' +
-          '<div><h3>' + esc(e.title) + '</h3><p class="pick-meta">' + m + '</p></div></article>';
-      }).join("") +
-    '</div>';
-}
-
-/* ============ 栏目导航 ============ */
-function renderFilters(){
-  const el = document.getElementById("filters");
-  el.innerHTML = '<span class="flabel">栏目导航</span>';
-  CATS.forEach(c => {
-    const b = document.createElement("button");
-    b.className = "f-chip" + (c.key === current ? " active" : "");
-    b.innerHTML = c.key === "all" ? "全部" : "<i>" + c.no + "</i>" + c.name;
-    b.setAttribute("aria-pressed", c.key === current ? "true" : "false");
-    b.onclick = () => {
-      const same = current === c.key;
-      current = c.key;
-      renderFilters();
-      if(!same){
-        renderList();
-        /* 新卡片带 .reveal，切栏后必须重新观察入场，否则 opacity:0 不可见 */
-        observeReveals();
+    var pg = e.target.closest("[data-page]");
+    if (pg && !pg.disabled) {
+      var n = parseInt(pg.getAttribute("data-page"), 10);
+      if (n && n !== state.page) {
+        state.page = n;
+        renderGroups();
+        gotoList();
       }
-      /* 报头+头版较高，切栏后把列表带入视口，首屏即可看到栏目内容 */
-      scrollToList();
-    };
-    el.appendChild(b);
+      return;
+    }
+    if (e.target.closest("[data-reset]")) { resetFilters(); return; }
+    if (e.target.closest("[data-retry]")) {
+      delete cache[state.city];
+      $("#groups").innerHTML = '<div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>';
+      loadCity(state.city).then(renderAll);
+      return;
+    }
   });
-}
 
-/* 切栏后滚动到列表（留出吸顶栏目导航高度；尊重减少动效偏好）*/
-function scrollToList(){
-  const main = document.getElementById("list");
-  if(!main) return;
-  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const top = main.getBoundingClientRect().top + window.scrollY - 76;
-  window.scrollTo({ top: Math.max(0, top), behavior: reduce ? "auto" : "smooth" });
-}
-
-/* ============ 城市版本 ============ */
-function renderCities(){
-  const el = document.getElementById("cities");
-  el.innerHTML = '<span class="clabel">城市版本</span>';
-  cityIndex.forEach(c => {
-    const b = document.createElement("button");
-    b.className = "city-btn" + (c.key === currentCity ? " active" : "");
-    b.textContent = c.name + "版";
-    b.setAttribute("aria-pressed", c.key === currentCity ? "true" : "false");
-    b.onclick = async () => {
-      if(currentCity === c.key) return;
-      currentCity = c.key;
-      try { localStorage.setItem("events-city", c.key); } catch(e) {}
-      try { history.replaceState(null, "", "?city=" + c.key); } catch(e) {}
-      renderCities();
-      renderFilters();
-      if(pending()){
-        document.getElementById("list").innerHTML = '<div class="empty">正在取版，请稍候…</div>';
-      }
-      await loadCity(c.key);
-    };
-    el.appendChild(b);
+  $("#searchBtn").addEventListener("click", openSearch);
+  $("#qClose").addEventListener("click", closeSearch);
+  $("#searchBackdrop").addEventListener("click", closeSearch);
+  $("#themeBtn").addEventListener("click", function () {
+    setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
   });
-}
+  $("#totop").addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: prefersReduce() ? "auto" : "smooth" });
+  });
 
-/* ============ 卡片 ============ */
-function cardHTML(e, cat){
-  const d = daysLeft(e.end);
-  let stamp = "";
-  if(d !== null && d >= 0){
-    if(d === 0) stamp = '<span class="stamp hot">今天截止</span>';
-    else if(d <= 7) stamp = '<span class="stamp">剩 ' + d + ' 天</span>';
+  var q = $("#q");
+  var timer = null;
+  q.addEventListener("input", function () {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function () {
+      state.q = q.value.trim();
+      $("#qClear").hidden = !q.value;
+      state.page = 1;
+      renderGroups();
+    }, 130);
+  });
+  $("#qClear").addEventListener("click", function () {
+    q.value = ""; state.q = ""; $("#qClear").hidden = true; state.page = 1; renderGroups(); q.focus();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement && document.activeElement.tagName);
+    if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) { e.preventDefault(); openSearch(); q.select(); return; }
+    if (e.key === "Escape") { closeSearch(); if (document.activeElement === q) q.blur(); return; }
+    if (!typing && e.key === "/") { e.preventDefault(); openSearch(); }
+  });
+
+  var ticking = false;
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset || 0;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var bar = $("#progressBar");
+    if (bar) bar.style.width = (h > 0 ? Math.min(1, y / h) * 100 : 0).toFixed(2) + "%";
+    var banner = $("#banner");
+    var threshold = (banner ? banner.offsetHeight : 400) - 70;
+    $("#topbar").classList.toggle("solid", y > threshold);
+    $("#totop").classList.toggle("on", y > 700);
+    ticking = false;
   }
-  const alert = e.alert ? '<span class="alert">「' + esc(e.alert) + '」</span>' : "";
-  const meta = [e.date, e.venue, e.area].filter(Boolean).map(esc).join('<i>·</i>');
-  const price = e.price ? '<span class="price-tag">' + esc(e.price) + '</span>' : "";
-  return '<article class="card reveal" style="--cc:' + cat.color + ';--cc-soft:' + cat.soft + '">' +
-    '<div class="card-side">' + stamp + '<span class="cat-badge">' + cat.name + '</span></div>' +
-    '<h3 class="card-title">' + esc(e.title) + '</h3>' +
-    '<p class="card-meta">' + meta + '</p>' +
-    '<p class="card-desc">' + esc(e.desc) + '</p>' +
-    '<p class="card-foot">' + price + alert + '</p>' +
-  '</article>';
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  window.addEventListener("resize", onScroll);
+  onScroll();
 }
 
-function renderList(){
-  const main = document.getElementById("list");
-  main.innerHTML = "";
-  if(pending()){
-    main.innerHTML = '<div class="empty">该版面采集中，每日 08:00 付印</div>';
-    return;
-  }
-  const items = (current === "all" ? curEvents() : curEvents().filter(e => e.cat === current)).filter(live);
-  if(items.length === 0){
-    main.innerHTML = '<div class="empty">' +
-      (current === "all" ? "该城市暂无进行中的活动" : "本栏目本期暂无条目") + '</div>';
-    return;
-  }
-  const groups = {};
-  items.forEach(e => { (groups[e.cat] = groups[e.cat] || []).push(e); });
-  CATS.filter(c => c.key !== "all" && groups[c.key]).forEach(c => {
-    /* 组内按截止日期升序（空串排尾），与数据契约一致，此处兜底 */
-    const sorted = groups[c.key].slice().sort((a, b) =>
-      (a.end === "" ? 1 : 0) - (b.end === "" ? 1 : 0) || (a.end < b.end ? -1 : 1));
-    const sec = document.createElement("section");
-    sec.className = "group";
-    sec.style.setProperty("--cc", c.color);
-    sec.innerHTML =
-      '<div class="group-head"><span class="g-no">栏目 ' + c.no + '</span><span class="g-sq"></span>' +
-      '<h2>' + c.name + '</h2><span class="g-count">' + sorted.length + ' 条</span>' +
-      '<span class="g-rule"></span></div>' +
-      sorted.map(e => cardHTML(e, c)).join("");
-    main.appendChild(sec);
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", t === "dark" ? "#10140f" : "#f7f2e8");
+  $("#themeBtn").setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+}
+
+/* ======================================================================
+   9. 启动
+   ====================================================================== */
+function boot() {
+  loadFavs();
+  setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+  bind();
+
+  getJSON(DATA_BASE + "/cities.json").then(function (j) {
+    if (!Array.isArray(j) || j.length === 0) throw new Error("empty");
+    cityIndex = j;
+    var key = "";
+    try {
+      var qp = new URLSearchParams(location.search).get("city");
+      if (qp && cityIndex.some(function (c) { return c.key === qp; })) key = qp;
+    } catch (e) {}
+    if (!key) {
+      try {
+        var saved = localStorage.getItem(CITY_KEY);
+        if (saved && cityIndex.some(function (c) { return c.key === saved; })) key = saved;
+      } catch (e) {}
+    }
+    if (!key) key = cityIndex[0].key;
+    state.city = key;
+    syncQuery();
+    return loadCity(key).then(renderAll);
+  }).catch(function () {
+    $("#groups").innerHTML = '<div class="empty"><b>城市列表加载失败</b><p>请刷新页面重试</p></div>';
+    $("#kicker").textContent = "OFFLINE";
   });
-  /* 卡片带 .reveal 入场类，任何路径重渲染后都要重新观察，避免不可见 */
-  observeReveals();
 }
-
-/* ============ 滚动入场 ============ */
-const io = ("IntersectionObserver" in window) ? new IntersectionObserver(entries => {
-  let i = 0;
-  entries.forEach(en => {
-    if(!en.isIntersecting) return;
-    en.target.style.transitionDelay = (i * 70) + "ms";
-    en.target.classList.add("in");
-    io.unobserve(en.target);
-    i++;
-  });
-}, { rootMargin: "0px 0px -6% 0px", threshold: .05 }) : null;
-function observeReveals(){
-  if(!io){ document.querySelectorAll(".reveal").forEach(el => el.classList.add("in")); return; }
-  document.querySelectorAll(".reveal:not(.in)").forEach(el => io.observe(el));
-}
-
-/* ============ 回顶 ============ */
-const topBtn = document.getElementById("top");
-window.addEventListener("scroll", () => {
-  topBtn.style.display = window.scrollY > 400 ? "block" : "none";
-}, { passive: true });
-topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
 boot();
+
+})();
 </script>
 </body>
 </html>
