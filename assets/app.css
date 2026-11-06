@@ -731,6 +731,19 @@ html[data-theme="dark"] .status-banner{color:var(--accent)}
 .notfound h1{font-family:var(--font-cn-display);font-size:clamp(24px,4vw,36px);font-weight:900}
 .notfound p{margin-top:12px;color:var(--muted);font-size:13.5px;line-height:1.9}
 
+/* ---------------------------------------------------------------- 页脚（只留信息确认提示） */
+.foot-min{
+  position:relative;z-index:1;
+  margin-top:clamp(36px,5vw,60px);
+  border-top:1px solid var(--line);
+  background:var(--bg);
+}
+.foot-min p{
+  max-width:var(--wrap);margin:0 auto;
+  padding:20px clamp(16px,3vw,28px) 34px;
+  font-size:11px;line-height:1.8;letter-spacing:.02em;color:var(--muted);
+}
+
 /* ---------------------------------------------------------------- 页脚 */
 .foot{position:relative;z-index:1;margin-top:clamp(40px,6vw,80px);background:#141a15;color:#efeadd;padding:clamp(34px,4.4vw,56px) 0 26px}
 html[data-theme="dark"] .foot{background:#0a0d09}
