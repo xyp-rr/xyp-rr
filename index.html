@@ -120,11 +120,9 @@ var _hmt = _hmt || [];
     <main class="main" id="browse">
       <div class="list-head">
         <div class="lh-title">
-          <span class="sec-no">01</span>
           <h2 id="allTitle">全部活动</h2>
           <span class="sec-en" id="allEn">all events</span>
         </div>
-        <span class="sec-count" id="allCount"></span>
       </div>
 
       <div class="resultbar">
@@ -145,7 +143,6 @@ var _hmt = _hmt || [];
 
     <!-- ============ 侧栏 ============ -->
     <aside class="sidebar" aria-label="城市与筛选">
-      <section class="widget author" id="authorCard"></section>
       <section class="widget">
         <h3 class="widget-title">区域 <span>标签</span></h3>
         <div class="widget-body"><div class="tagcloud" id="tagCloud"></div></div>
@@ -173,7 +170,7 @@ var _hmt = _hmt || [];
       每天 08:00 自动更新 · 多城同步
     </div>
   </div>
-  <p class="foot-note">活动信息以各主办方最新公告为准，出行前请再确认一次场次与开放时间。点开任意活动可看详情、查地图。</p>
+  <p class="foot-note">活动信息以主办方最新公告为准；出行前请再确认一次场次、票价与开放时间。</p>
 </footer>
 
 <button class="totop" id="totop" type="button" aria-label="回到顶部">
@@ -375,7 +372,7 @@ function renderBanner() {
   var c = curCity();
   if (!c) return;
   var items = liveItems();
-  $("#kicker").textContent = c.en + " · " + dateCn() + " · 第 " + issueNo() + " 期";
+  $("#kicker").textContent = dateCn() + " · 第 " + issueNo() + " 期";
   $("#cityName").textContent = c.name;
   $("#cityEn").textContent = c.en;
   var note = CITY_NOTES[c.key] || "展览、市集、赏花、演出与夜游。";
@@ -404,26 +401,6 @@ function renderSidebar() {
     if (it.top) topN++;
     if (/免费/.test(it.price || "")) freeN++;
   });
-
-  $("#authorCard").innerHTML =
-    '<div class="author-cover">' +
-      '<img src="' + ASSET + "/city-" + esc(c.key) + '-640.jpg" alt="' + esc(c.name) + '城市照片" loading="lazy" onerror="this.style.display=\'none\'">' +
-      '<span class="a-tag">正在浏览</span>' +
-    "</div>" +
-    '<div class="author-body">' +
-      "<h3>" + esc(c.name) + "</h3>" +
-      '<p class="author-sub">' + esc(c.en) + " · 第 " + issueNo() + " 期</p>" +
-      '<p class="author-desc">' + esc(CITY_NOTES[c.key] || "城市漫游手册，每天 08:00 更新。") + "</p>" +
-      '<div class="author-stats">' +
-        "<div><b>" + items.length + "</b><span>个去处</span></div>" +
-        "<div><b>" + topN + "</b><span>本周必去</span></div>" +
-        "<div><b>" + freeN + "</b><span>免费</span></div>" +
-      "</div>" +
-      '<div class="city-switch" id="citySwitch">' + cityIndex.map(function (x) {
-        return '<button type="button" data-city="' + esc(x.key) + '" aria-pressed="' +
-          (x.key === c.key ? "true" : "false") + '">' + esc(x.name) + "</button>";
-      }).join("") + "</div>" +
-    "</div>";
 
   var areas = {};
   items.forEach(function (it) { if (it.area) areas[it.area] = (areas[it.area] || 0) + 1; });
@@ -498,7 +475,7 @@ function cardHTML(it, i) {
           ? (it.source ? '<span class="chip-src" title="来源">' + esc(it.source) + "</span>" : "") +
             '<a class="go" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">' + sourceLabel() +
             '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
-          : '<span class="go nosrc" title="这条还没采集到可信出处">出处待补</span>') +
+          : "") +
         favBtn(it) + "</span>" +
     "</div>" +
   "</article>";
@@ -532,7 +509,6 @@ function renderHead(list) {
   else if (state.cat !== "all" && CAT_BY[state.cat]) { name = CAT_BY[state.cat].name; en = CAT_BY[state.cat].en; }
   $("#allTitle").textContent = name;
   $("#allEn").textContent = en;
-  $("#allCount").textContent = list.length + " 条";
 }
 
 function renderGroups() {
