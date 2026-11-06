@@ -340,7 +340,7 @@ html[data-theme="dark"] .i-sun{display:block}
   display:grid;grid-template-columns:minmax(0,1fr) var(--side);
   gap:clamp(20px,2.6vw,32px);
   align-items:start;
-  padding-top:clamp(28px,3.6vw,44px);
+  padding-top:clamp(14px,1.8vw,22px);
   padding-bottom:clamp(40px,6vw,72px);
 }
 .main{min-width:0}
@@ -561,6 +561,7 @@ html[data-theme="dark"] .i-sun{display:block}
 }
 
 /* ---------------------------------------------------------------- 列表头 */
+.list-top{padding-top:clamp(26px,3.4vw,40px)}
 .list-head{
   display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
   padding-bottom:12px;border-bottom:1.5px solid var(--line-2);
@@ -568,7 +569,7 @@ html[data-theme="dark"] .i-sun{display:block}
 .lh-title{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
 .list-head h2{font-family:var(--font-cn-display);font-size:clamp(21px,2.4vw,28px);font-weight:900;line-height:1.2;letter-spacing:-.01em}
 .list-head .sec-en{padding-bottom:3px}
-.resultbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 2px 0}
+.resultbar{display:flex;margin-bottom:4px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 2px 0}
 .resultbar .result{padding:0}
 .mini-filters{display:flex;align-items:center;gap:6px}
 .mini{
