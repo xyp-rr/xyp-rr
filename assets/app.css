@@ -649,6 +649,11 @@ html[data-theme="dark"] .i-sun{display:block}
 }
 .card-side{display:flex;flex-direction:column;align-items:flex-end;gap:9px;min-width:120px;padding-top:2px}
 .card-side .price{text-align:right;line-height:1.6}
+.chip-src{
+  display:inline-block;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  padding:1px 7px;border-radius:5px;border:1px solid var(--line);
+  font-size:10px;color:var(--muted);vertical-align:middle;
+}
 .card-actions{display:flex;align-items:center;gap:9px}
 .card-hit{position:absolute;inset:0;z-index:1;border-radius:inherit}
 .card-hit:focus-visible{outline-offset:-3px}
