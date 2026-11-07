@@ -168,25 +168,25 @@ body::before{
   animation:aurora 48s ease-in-out infinite alternate;
 }
 /* 每座城市一套晨光：广州薄荷、深圳海蓝、长沙暖橘 */
-body[data-city="sz"]{
+body[data-scene="sz"]{
   --aur-1:rgba(92,226,232,.48);
   --aur-2:rgba(104,168,255,.55);
   --aur-3:rgba(255,198,150,.38);
   --aur-4:rgba(120,200,255,.46);
 }
-body[data-city="cs"]{
+body[data-scene="cs"]{
   --aur-1:rgba(255,198,104,.42);
   --aur-2:rgba(255,158,120,.45);
   --aur-3:rgba(255,124,152,.30);
   --aur-4:rgba(255,192,124,.38);
 }
-html[data-theme="dark"] body[data-city="sz"]{
+html[data-theme="dark"] body[data-scene="sz"]{
   --aur-1:rgba(18,118,124,.5);
   --aur-2:rgba(30,74,140,.55);
   --aur-3:rgba(120,64,34,.38);
   --aur-4:rgba(22,92,124,.46);
 }
-html[data-theme="dark"] body[data-city="cs"]{
+html[data-theme="dark"] body[data-scene="cs"]{
   --aur-1:rgba(130,92,20,.42);
   --aur-2:rgba(140,62,32,.45);
   --aur-3:rgba(120,36,54,.34);

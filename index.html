@@ -57,7 +57,7 @@ var _hmt = _hmt || [];
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/app.css?v=4">
+<link rel="stylesheet" href="assets/app.css?v=5">
 <link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
@@ -565,7 +565,7 @@ function gotoList() {
 function switchCity(key) {
   if (key === state.city) return;
   state.city = key;
-  document.body.dataset.city = key;
+  document.body.dataset.scene = key;
   state.cat = "all"; state.q = ""; state.free = false; state.fav = false; state.area = ""; state.page = 1;
   syncQuery();
   try { localStorage.setItem(CITY_KEY, key); } catch (e) {}
@@ -657,7 +657,7 @@ function bind() {
       gotoList();
       return;
     }
-    var cityBtn = e.target.closest("[data-city]");
+    var cityBtn = e.target.closest("button[data-city]");
     if (cityBtn) { switchCity(cityBtn.getAttribute("data-city")); return; }
     var areaBtn = e.target.closest("[data-area]");
     if (areaBtn) {
@@ -775,7 +775,7 @@ function boot() {
     }
     if (!key) key = cityIndex[0].key;
     state.city = key;
-    document.body.dataset.city = key;
+    document.body.dataset.scene = key;
     syncQuery();
     return loadCity(key).then(renderAll);
   }).catch(function () {
