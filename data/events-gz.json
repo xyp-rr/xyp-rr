@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-06",
+  "updated": "2026-11-07",
   "items": [
     {
       "cat": "exhibition",
@@ -11,7 +11,7 @@
       "price": "免费需预约",
       "desc": "13位神经多元青年的绘画、拼贴与写作作品展，10月25日14点开幕、28日14点设研讨会，免费预约，建议先确认路线。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "exhibition",
@@ -155,7 +155,9 @@
       "price": "免费",
       "desc": "系统呈现陈家泠从笔墨技法到东方哲思的完整探索路径，创新从不背离传统而是在深化中大胆突破，三楼主厅与多厅展出，11月29日闭幕。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://www.gdmoa.org/Exhibition/Exhibitions/2026/202609/t20260917_18435.shtml",
+      "source": "广东美术馆"
     },
     {
       "cat": "exhibition",
@@ -371,7 +373,9 @@
       "price": "免费",
       "desc": "约200件报刊文献还原孙中山诞辰纪念的由来与影响；纪念馆临珠江，可顺路走滨江步道，周一多闭馆需避开。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://whly.gd.gov.cn/service_new/hdyg/content/post_4972612.html",
+      "source": "广东省文化和旅游厅"
     },
     {
       "cat": "exhibition",
@@ -383,7 +387,9 @@
       "price": "免费需预约",
       "desc": "宫廷、民间、外销三系织绣同场，荷包专题方寸见工；地铁1号线陈家祠站直达，馆内木雕砖雕也值得细看。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://whly.gd.gov.cn/service_new/hdyg/content/post_4972612.html",
+      "source": "广东省文化和旅游厅"
     },
     {
       "cat": "exhibition",
@@ -395,7 +401,9 @@
       "price": "免费需预约",
       "desc": "362件套文物呈现磨刀山、青塘、岩山寨遗址新发现，梳理岭南融入华夏的脉络；免费但需提前在省博公众号预约。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://whly.gd.gov.cn/service_new/hdyg/content/post_4972612.html",
+      "source": "广东省文化和旅游厅"
     },
     {
       "cat": "exhibition",
@@ -407,7 +415,9 @@
       "price": "成人 50 元",
       "desc": "以数字光影重构《千里江山图》，可行可游可望可居，沉浸感强；地铁5号线珠江新城站直达，需省博公众号预约并单独购特展票。",
       "top": false,
-      "alert": "即将开幕"
+      "alert": "即将开幕",
+      "url": "https://whly.gd.gov.cn/service_new/hdyg/content/post_4972612.html",
+      "source": "广东省文化和旅游厅"
     },
     {
       "cat": "exhibition",
@@ -419,7 +429,9 @@
       "price": "免费需预约",
       "desc": "西村窑考古70年成果，凤首壶、军持等出水器物实证海丝网络，设实验考古互动区；大学城片区，地铁4号线新造站转公交。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://whly.gd.gov.cn/service_new/hdyg/content/post_4972612.html",
+      "source": "广东省文化和旅游厅"
     },
     {
       "cat": "exhibition",
@@ -455,7 +467,9 @@
       "price": "免费需预约",
       "desc": "170余件套展品讲岭南园林两千年演进，从宫署遗迹到三大流派之一；地铁2号线越秀公园站，王宫展区需预约。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://whly.gd.gov.cn/service_new/hdyg/content/post_4972612.html",
+      "source": "广东省文化和旅游厅"
     },
     {
       "cat": "exhibition",
@@ -503,7 +517,9 @@
       "price": "免费需预登记",
       "desc": "橡塑、包装、印刷、制罐四展同馆联动，覆盖原料到智能装备全链条；地铁8号线琶洲站C出口即到，参观前扫码预登记，11月7日14:30提前闭馆。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://news.cnpowder.com.cn/92023.html",
+      "source": "中国粉体网"
     },
     {
       "cat": "market",
@@ -539,7 +555,7 @@
       "price": "约108元",
       "desc": "无期迷途与陶陶居限定联动，正佳广场主题布置加联名点心套餐，10月12日办至11月8日，套餐约108元需现场点单。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "market",
@@ -551,7 +567,7 @@
       "price": "以官方公告为准",
       "desc": "10场市场趋势发布专场，技术类与出海类各5场，跨境电商平台首次集体登场，11月4日至5日全球买手采购季预计接待专业买家过万人次。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "market",
@@ -563,7 +579,7 @@
       "price": "需预登记",
       "desc": "颗粒技术与粉体工业领域年度盛会，含学术报告、装备展览与产业对接，业内人士可在大会官网预报名参会。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "market",
@@ -983,7 +999,9 @@
       "price": "登记入场",
       "desc": "2.5万㎡规模，六大茶类与紫砂茶器同场，可现场品鉴淘茶，是年末入手年茶与送礼茶盒的好时机。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://news.dayoo.com/guangzhou/202610/30/139995_55018822.htm",
+      "source": "广州日报大洋网"
     },
     {
       "cat": "market",
@@ -994,8 +1012,10 @@
       "area": "荔湾",
       "price": "免费",
       "desc": "开幕式暨第十二届粤剧华光祖师诞巡游11月6日永庆坊启幕，连演24天，广福台每日三场惠民演出，可持粤迹地图打卡集章换文创。",
-      "top": false,
-      "alert": "明日开幕"
+      "top": true,
+      "alert": "明日开幕",
+      "url": "https://huacheng.gz-cmc.com/pages/2026/11/06/fef43ecbaf2f4397a55581e6e8072c36.html",
+      "source": "花城+"
     },
     {
       "cat": "market",
@@ -1391,7 +1411,7 @@
       "price": "购票入场",
       "desc": "主打原创漫画的垂直向市集，148个摊位，超正经东叔等5位特邀嘉宾到场签绘。地铁8号线鹅掌坦站A口步行360米。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1403,7 +1423,7 @@
       "price": "购票入场",
       "desc": "黄埔科学城云汇天地L2层，Live House场地办的only场，具体开票与场次时间以购票页公告为准，建议提前到场。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1415,7 +1435,7 @@
       "price": "128—398元",
       "desc": "二次元歌手祈Inory个人巡演广州站，11月8日MAO中大店二号馆开唱，早鸟128元、预售198元，站席观演建议提前到场兑票。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1427,7 +1447,7 @@
       "price": "160—480元",
       "desc": "古琴演奏家武怀琛专场，11月8日落址番禺时代芳华里云幕剧场，票价160至480元，长隆地铁站G口步行可达，适合静心聆听。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1439,7 +1459,7 @@
       "price": "购票入场",
       "desc": "未定事件簿主题only场，画师摊位与互动区集中在智汇park，天河客运站一带，具体时间以官方公告为准。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1451,7 +1471,7 @@
       "price": "380—1880元",
       "desc": "千人合唱级Kpop音乐节两日连唱，露天场地建议提前进场，散场人流集中，地铁4号线或21号线奥体中心站可达。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1463,7 +1483,7 @@
       "price": "约99元起",
       "desc": "新专辑同名巡演广州站，年轻乐队现场票价友好，太古仓店站席为主，建议轻装前往并提前到场兑票。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1475,7 +1495,7 @@
       "price": "免费或低票价",
       "desc": "香港中乐团首度亮相二沙岛户外音乐季，笙七重奏与齐奏玩转百簧和鸣与宫崎骏动画组曲，民乐爱好者别错过。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1487,7 +1507,7 @@
       "price": "380—1680元",
       "desc": "小提琴家穆特携手英国皇家爱乐乐团，珠江西路大剧院声场顶级，周日晚场热门，建议尽早锁座并提前半小时入场。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -1499,7 +1519,7 @@
       "price": "100—580元",
       "desc": "法国冠军单曲《我的名字叫伊莲》原唱来穗，蔡淳佳《依恋》的法语原版现场，全场最低100元，地铁2号线白云文化广场站。",
       "top": false,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "preview",
@@ -2747,7 +2767,9 @@
       "price": "园区门票 20 元",
       "desc": "新优品种与珍贵老桩盆景集中亮相，一树多色最出片；地铁6号线植物园站A口，温室群景区为主展区，上午光线柔和更适合拍照。",
       "top": true,
-      "alert": "已盛放"
+      "alert": "已盛放",
+      "url": "https://news.dayoo.com/guangzhou/202610/31/139995_55018904.htm",
+      "source": "广州日报大洋网"
     },
     {
       "cat": "bloom",
@@ -2963,7 +2985,7 @@
       "price": "夜场票99元起",
       "desc": "升级为欢乐异世界，民国风主题区、开放式鬼屋与上千名NPC，对暗号可换玩票糖果，10月28日至31日延至23点闭园。",
       "top": true,
-      "alert": ""
+      "alert": "本周末"
     },
     {
       "cat": "night",
@@ -2987,7 +3009,9 @@
       "price": "免费需预约",
       "desc": "36 组灯光作品点亮花城，11 区轮动亮灯、大湾鸡换装等装置可打卡；主会场海心沙需提前在穗好办预约，19 点后灯光最出片。",
       "top": false,
-      "alert": ""
+      "alert": "",
+      "url": "https://www.gz.gov.cn/zlgz/wlzx/tpxw/content/post_11085212.html",
+      "source": "广州市人民政府"
     },
     {
       "cat": "night",
