@@ -1,30 +1,41 @@
 /* ==========================================================================
    城市活动晨报 · 城市漫游手册
    首页 index.html / 详情页 detail.html
-   结构参考博客主题（顶栏 + 封面横幅 + 主栏 / 侧栏 + 分页文章列表），
-   视觉用我们自己的：思源宋体大标题 + Fraunces 斜体 + 陶土色 + 城市照片。
+
+   视觉定调：晨光渐变（Aurora Daylight）
+   - 画布：冷调雾面（近白冷灰），薄荷 / 天蓝 / 杏三色光晕缓慢漂移，叠细网点；
+     广州偏薄荷、深圳偏海蓝、长沙偏暖橘，随城市切换。
+   - 材质：卡片与侧栏为玻璃浮层（白 72% + 14px 模糊），去纸质米色与噪点颗粒。
+   - 骨架：封面大图淡出到画布 → 通栏标题 → 主栏（筛选行 + 卡片）与侧栏同顶线。
+   - 字形：思源宋体大标题 + Fraunces 斜体 + IBM Plex Mono 数字，正文 Noto Sans SC。
+   - 强调色：陶土红 #de4c26（唯一强调色，用于日期、标签与动作）。
    ========================================================================== */
 
 /* ---------------------------------------------------------------- 令牌 */
 :root{
   color-scheme: light;
 
-  --bg:#f7f2e8;
-  --bg-2:#efe7d8;
-  --surface:#fffdf7;
-  --surface-2:#fbf7ec;
+  /* 画布：冷调雾面（去纸质米色） */
+  --bg:#f3f7fa;
+  --bg-0:rgba(243,247,250,0);
+  --bg-2:#e6edf3;
+  --surface:#ffffff;
+  --surface-2:#f7fafc;
+  --glass:rgba(255,255,255,.72);
+  --card-bg:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
+  --card-ring:inset 0 1px 0 rgba(255,255,255,.85);
 
-  --ink:#16211b;
-  --ink-2:#31413a;
-  --muted:#64736a;
-  --faint:#95a096;
+  --ink:#0e1a22;
+  --ink-2:#33454f;
+  --muted:#5f7280;
+  --faint:#93a3ae;
 
-  --line:rgba(22,33,27,.14);
-  --line-2:rgba(22,33,27,.28);
+  --line:rgba(14,26,34,.10);
+  --line-2:rgba(14,26,34,.22);
 
   --accent:#de4c26;
   --accent-2:#b83c1c;
-  --accent-soft:#fbe3da;
+  --accent-soft:#fde4db;
   --accent-ink:#fff8f2;
 
   --c-exhibition:#6b4fbb; --b-exhibition:#efeafb;
@@ -34,8 +45,12 @@
   --c-bloom:#9a5b12;      --b-bloom:#f8ead6;
   --c-night:#4b3f8c;      --b-night:#e9e6f6;
 
-  --glow-a:rgba(222,76,38,.09);
-  --glow-b:rgba(31,107,79,.09);
+  /* 晨光光晕（背景氛围，不参与 UI 强调色） */
+  --aur-1:rgba(96,236,196,.55);
+  --aur-2:rgba(120,182,255,.5);
+  --aur-3:rgba(255,172,128,.44);
+  --aur-4:rgba(160,200,255,.5);
+  --dot:rgba(14,26,34,.085);
 
   --font-display:"Fraunces","Noto Serif SC","Songti SC","STSong",serif;
   --font-cn-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
@@ -45,21 +60,21 @@
   --wrap:1200px;
   --side:300px;
   --stick:64px;
-  --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:26px;
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-xl:28px;
 
-  --shadow-1:0 1px 2px rgba(30,26,16,.04);
-  --shadow-2:0 2px 8px rgba(30,26,16,.06),0 16px 34px -24px rgba(30,26,16,.35);
-  --shadow-3:0 24px 60px -30px rgba(20,18,10,.45);
+  --shadow-1:0 1px 2px rgba(12,26,38,.05);
+  --shadow-2:0 2px 10px rgba(12,26,38,.06),0 22px 46px -30px rgba(12,26,38,.45);
+  --shadow-3:0 30px 70px -34px rgba(12,26,38,.5);
 
-  --bg-trans:rgba(247,242,232,.95);
-  --bg-solid:rgba(247,242,232,.97);
+  --bg-trans:rgba(243,247,250,.78);
+  --bg-solid:rgba(243,247,250,.9);
 
   --bar-fg:#fff;
   --bar-pill:rgba(255,255,255,.16);
   --bar-pill-line:rgba(255,255,255,.34);
   --bar-pill-fg:#fff;
   --bar-active-bg:#fff;
-  --bar-active-fg:#16211b;
+  --bar-active-fg:#0e1a22;
 
   --ease:cubic-bezier(.16,1,.3,1);
   --dur-fast:160ms; --dur-base:280ms; --dur-slow:600ms;
@@ -68,18 +83,22 @@
 html[data-theme="dark"]{
   color-scheme: dark;
 
-  --bg:#10140f;
-  --bg-2:#1a2018;
-  --surface:#171d16;
-  --surface-2:#1d241b;
+  --bg:#0a1118;
+  --bg-0:rgba(10,17,24,0);
+  --bg-2:#101b24;
+  --surface:#111c25;
+  --surface-2:#15222c;
+  --glass:rgba(17,28,37,.74);
+  --card-bg:linear-gradient(180deg,#131f28 0%,#0f1a22 100%);
+  --card-ring:inset 0 1px 0 rgba(255,255,255,.05);
 
-  --ink:#f3eee1;
-  --ink-2:#d5d2c4;
-  --muted:#a2ab9c;
-  --faint:#727b6e;
+  --ink:#eef4f8;
+  --ink-2:#c8d6de;
+  --muted:#93a4b0;
+  --faint:#62737f;
 
-  --line:rgba(243,238,225,.14);
-  --line-2:rgba(243,238,225,.30);
+  --line:rgba(238,244,248,.12);
+  --line-2:rgba(238,244,248,.26);
 
   --accent:#ff6b42;
   --accent-2:#ff8a67;
@@ -93,15 +112,18 @@ html[data-theme="dark"]{
   --c-bloom:#f0b45f;      --b-bloom:#33230e;
   --c-night:#a8a2f2;      --b-night:#1d1a3a;
 
-  --glow-a:rgba(255,107,66,.10);
-  --glow-b:rgba(99,216,171,.07);
+  --aur-1:rgba(24,120,102,.5);
+  --aur-2:rgba(32,78,132,.52);
+  --aur-3:rgba(126,58,26,.4);
+  --aur-4:rgba(24,86,118,.46);
+  --dot:rgba(238,244,248,.09);
 
   --shadow-1:0 1px 2px rgba(0,0,0,.5);
-  --shadow-2:0 2px 8px rgba(0,0,0,.4),0 18px 38px -24px rgba(0,0,0,.9);
-  --shadow-3:0 24px 60px -30px rgba(0,0,0,.95);
+  --shadow-2:0 2px 10px rgba(0,0,0,.42),0 22px 46px -30px rgba(0,0,0,.9);
+  --shadow-3:0 30px 70px -34px rgba(0,0,0,.95);
 
-  --bg-trans:rgba(16,20,15,.94);
-  --bg-solid:rgba(16,20,15,.97);
+  --bg-trans:rgba(10,17,24,.82);
+  --bg-solid:rgba(10,17,24,.92);
 
   --bar-pill:rgba(255,255,255,.14);
   --bar-pill-line:rgba(255,255,255,.3);
@@ -133,18 +155,54 @@ ul{list-style:none;padding:0}
 ::selection{background:var(--accent);color:var(--accent-ink)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 
+/* 背景：晨光渐变（薄荷 / 天蓝 / 杏） + 细网点，替代原来的纸质噪点 */
 body::before{
-  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  content:"";position:fixed;inset:-12% -8%;z-index:0;pointer-events:none;
   background:
-    radial-gradient(900px 620px at 100% -8%, var(--glow-a), transparent 62%),
-    radial-gradient(760px 560px at -10% 30%, var(--glow-b), transparent 60%);
+    linear-gradient(180deg, var(--bg) 0%, rgba(243,247,250,.42) 10%, transparent 28%),
+    radial-gradient(46% 42% at 14% 6%, var(--aur-1), transparent 68%),
+    radial-gradient(40% 38% at 86% 2%, var(--aur-2), transparent 66%),
+    radial-gradient(48% 44% at 82% 74%, var(--aur-3), transparent 70%),
+    radial-gradient(38% 34% at 4% 68%, var(--aur-4), transparent 68%);
+  filter:saturate(1.05);
+  animation:aurora 48s ease-in-out infinite alternate;
+}
+/* 每座城市一套晨光：广州薄荷、深圳海蓝、长沙暖橘 */
+body[data-city="sz"]{
+  --aur-1:rgba(92,226,232,.48);
+  --aur-2:rgba(104,168,255,.55);
+  --aur-3:rgba(255,198,150,.38);
+  --aur-4:rgba(120,200,255,.46);
+}
+body[data-city="cs"]{
+  --aur-1:rgba(255,198,104,.42);
+  --aur-2:rgba(255,158,120,.45);
+  --aur-3:rgba(255,124,152,.30);
+  --aur-4:rgba(255,192,124,.38);
+}
+html[data-theme="dark"] body[data-city="sz"]{
+  --aur-1:rgba(18,118,124,.5);
+  --aur-2:rgba(30,74,140,.55);
+  --aur-3:rgba(120,64,34,.38);
+  --aur-4:rgba(22,92,124,.46);
+}
+html[data-theme="dark"] body[data-city="cs"]{
+  --aur-1:rgba(130,92,20,.42);
+  --aur-2:rgba(140,62,32,.45);
+  --aur-3:rgba(120,36,54,.34);
+  --aur-4:rgba(126,86,26,.4);
+}
+@keyframes aurora{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(-2.5%,1.6%,0) scale(1.1)}
 }
 body::after{
-  content:"";position:fixed;inset:0;z-index:200;pointer-events:none;opacity:.045;
-  mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
+  background-image:radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(140% 100% at 50% 0%, #000 10%, transparent 72%);
+  mask-image:radial-gradient(140% 100% at 50% 0%, #000 10%, transparent 72%);
 }
-html[data-theme="dark"] body::after{opacity:.06;mix-blend-mode:screen}
 
 .wrap{
   position:relative;z-index:1;width:100%;max-width:var(--wrap);margin:0 auto;
@@ -293,6 +351,11 @@ html[data-theme="dark"] .i-sun{display:block}
   content:"";position:absolute;inset:0;
   background:linear-gradient(to bottom, rgba(9,14,11,.72), rgba(9,14,11,.24) 34%, rgba(9,14,11,.66) 100%);
 }
+.banner::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:clamp(52px,7.2vh,84px);
+  z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom, var(--bg-0) 0%, var(--bg) 92%);
+}
 .banner-inner{position:relative;z-index:2;width:100%;padding:calc(var(--stick) + 30px) 20px 70px}
 .kicker{
   display:inline-flex;align-items:center;gap:9px;
@@ -330,8 +393,9 @@ html[data-theme="dark"] .i-sun{display:block}
 .scroll-cue:hover{background:rgba(255,255,255,.16)}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 .banner-credit{
-  position:absolute;right:14px;bottom:10px;z-index:3;
-  font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.5);
+  position:absolute;right:14px;bottom:11px;z-index:4;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;
+  color:var(--muted);opacity:.75;
 }
 
 /* ---------------------------------------------------------------- 主栅格 */
@@ -340,15 +404,19 @@ html[data-theme="dark"] .i-sun{display:block}
   display:grid;grid-template-columns:minmax(0,1fr) var(--side);
   gap:clamp(20px,2.6vw,32px);
   align-items:start;
-  padding-top:clamp(14px,1.8vw,22px);
+  padding-top:clamp(10px,1.4vw,16px);
   padding-bottom:clamp(40px,6vw,72px);
 }
 .main{min-width:0}
-.sidebar{position:relative;display:flex;flex-direction:column;gap:14px}
+/* 左右两栏同顶线起排：筛选行属于主栏，侧栏不再被压在下方留出缺口 */
+.sidebar{position:relative;display:flex;flex-direction:column;gap:14px;padding-top:1px}
 
 /* ---------------------------------------------------------------- 侧栏部件 */
 .widget{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(14px) saturate(1.25);
+  backdrop-filter:blur(14px) saturate(1.25);
+  border:1px solid var(--line);border-radius:var(--r-md);
   box-shadow:var(--shadow-1);overflow:hidden;
 }
 .widget-title{
@@ -417,8 +485,8 @@ html[data-theme="dark"] .i-sun{display:block}
 .picks{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:18px}
 .pick{
   position:relative;display:flex;flex-direction:column;overflow:hidden;
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
-  box-shadow:var(--shadow-1);
+  background:var(--card-bg);border:1px solid var(--line);border-radius:var(--r-md);
+  box-shadow:var(--shadow-1),var(--card-ring);
   transition:transform var(--dur-base) var(--ease),box-shadow var(--dur-base) var(--ease),border-color var(--dur-fast) ease-out;
 }
 .pick:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:var(--line-2)}
@@ -561,15 +629,19 @@ html[data-theme="dark"] .i-sun{display:block}
 }
 
 /* ---------------------------------------------------------------- 列表头 */
-.list-top{padding-top:clamp(26px,3.4vw,40px)}
+.list-top{padding-top:clamp(26px,3.4vw,40px);padding-bottom:0}
 .list-head{
   display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
-  padding-bottom:12px;border-bottom:1.5px solid var(--line-2);
+  padding-bottom:12px;border-bottom:1px solid var(--line-2);
 }
 .lh-title{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
 .list-head h2{font-family:var(--font-cn-display);font-size:clamp(21px,2.4vw,28px);font-weight:900;line-height:1.2;letter-spacing:-.01em}
 .list-head .sec-en{padding-bottom:3px}
-.resultbar{display:flex;margin-bottom:4px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 2px 0}
+/* 筛选行住在主栏里，与右侧栏同一顶线 */
+.resultbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  min-height:28px;margin:0;padding:0 2px 12px;
+}
 .resultbar .result{padding:0}
 .mini-filters{display:flex;align-items:center;gap:6px}
 .mini{
@@ -582,13 +654,13 @@ html[data-theme="dark"] .i-sun{display:block}
 .mini b{font-family:var(--font-mono);font-size:9.5px;font-weight:500;opacity:.8}
 
 /* ---------------------------------------------------------------- 文章卡片 */
-.cards{display:flex;flex-direction:column;gap:12px;padding-top:16px}
+.cards{display:flex;flex-direction:column;gap:12px;padding-top:12px}
 .card{
   position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;
   gap:8px 20px;align-items:start;
   padding:16px 18px 14px;
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
-  overflow:hidden;box-shadow:var(--shadow-1);
+  background:var(--card-bg);border:1px solid var(--line);border-radius:var(--r-md);
+  overflow:hidden;box-shadow:var(--shadow-1),var(--card-ring);
   transition:transform var(--dur-base) var(--ease),box-shadow var(--dur-base) var(--ease),border-color var(--dur-fast) ease-out;
   animation:rise var(--dur-slow) var(--ease) both;
   animation-delay:calc(var(--i,0) * 32ms);

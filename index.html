@@ -14,7 +14,7 @@ var _hmt = _hmt || [];
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>城市活动晨报 · 这周去哪</title>
 <meta name="description" content="像翻旅行志一样逛城市：广州、深圳、长沙每日本地活动精选，展览、市集、赏花、演出、夜游，按板块筛选，点开看详情。每天 08:00 自动更新。">
-<meta name="theme-color" content="#f7f2e8">
+<meta name="theme-color" content="#f1f5f8">
 <meta name="color-scheme" content="light dark">
 <meta property="og:title" content="城市活动晨报 · 这周去哪">
 <meta property="og:description" content="城市漫游手册 · 六大板块 · 每天 08:00 更新">
@@ -57,7 +57,7 @@ var _hmt = _hmt || [];
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/app.css?v=3">
+<link rel="stylesheet" href="assets/app.css?v=4">
 <link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
@@ -122,7 +122,11 @@ var _hmt = _hmt || [];
           <span class="sec-en" id="allEn">all events</span>
         </div>
       </div>
-
+  </div>
+  <div class="container wrap">
+    <!-- ============ 主栏 ============ -->
+    <main class="main" id="browse">
+      <!-- 筛选行收进主栏，右侧栏与它同顶线起排，消除右上角缺口 -->
       <div class="resultbar">
         <p class="result" id="result" aria-live="polite"></p>
         <div class="mini-filters">
@@ -133,11 +137,6 @@ var _hmt = _hmt || [];
           </button>
         </div>
       </div>
-
-  </div>
-  <div class="container wrap">
-    <!-- ============ 主栏 ============ -->
-    <main class="main" id="browse">
       <div class="groups" id="groups">
         <div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>
       </div>
@@ -566,6 +565,7 @@ function gotoList() {
 function switchCity(key) {
   if (key === state.city) return;
   state.city = key;
+  document.body.dataset.city = key;
   state.cat = "all"; state.q = ""; state.free = false; state.fav = false; state.area = ""; state.page = 1;
   syncQuery();
   try { localStorage.setItem(CITY_KEY, key); } catch (e) {}
@@ -747,7 +747,7 @@ function setTheme(t) {
   document.documentElement.setAttribute("data-theme", t);
   try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
   var meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", t === "dark" ? "#10140f" : "#f7f2e8");
+  if (meta) meta.setAttribute("content", t === "dark" ? "#0a1118" : "#f3f7fa");
   $("#themeBtn").setAttribute("aria-pressed", t === "dark" ? "true" : "false");
 }
 
@@ -775,6 +775,7 @@ function boot() {
     }
     if (!key) key = cityIndex[0].key;
     state.city = key;
+    document.body.dataset.city = key;
     syncQuery();
     return loadCity(key).then(renderAll);
   }).catch(function () {
