@@ -766,7 +766,8 @@
       "desc": "电子生产设备与智能制造专业展会，表面贴装、点胶与自动化产线集中亮相，从业者可登记入场，地铁20号线国展站。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -792,7 +793,8 @@
       "desc": "聚焦中国品牌出海的行业峰会，围绕品牌本土化落地与全球渠道拓展，设主题展区与论坛，汇聚跨境出海品牌方、平台方与服务商。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -805,7 +807,8 @@
       "desc": "铁路与城市轨道交通全产业链旗舰大展，11月25日至27日深圳会展中心举行，联动APEC峰会轨道交通国际合作议程，需登记入场。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -818,7 +821,8 @@
       "desc": "覆盖充换电设施、动力电池、储能系统与氢能全产业链，同期举办充换电运营与超充技术论坛，专业观众扫码预约观展。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -831,7 +835,8 @@
       "desc": "锂电池全产业链技术展，覆盖动力电池、储能系统与应用场景，同期举办电池安全与新材料论坛，业内人士预登记入场。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -844,7 +849,8 @@
       "desc": "约6万平方米、800家展商，覆盖抽水蓄能、压缩空气与用户侧储能，以专业观众为主，预登记后凭码入场，地铁1号线会展中心站。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -974,7 +980,8 @@
       "desc": "第24届HKPCA Show，主题AI驱动科技，9万平方米、700多家展商设九大展区，PCB与电子组装从业者的年度场，地铁20号线国展站。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",

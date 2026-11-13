@@ -597,7 +597,8 @@
       "desc": "秋季摩托车与配件集中订货档期，整车、头盔与改装件品牌齐聚，普通观众可现场逛展淘装备，地铁8号线琶洲站可达。",
       "top": false,
       "alert": "末班车",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -610,7 +611,8 @@
       "desc": "迎来30周年的全球涂料行业年度盛会，28个国家超1280家展商，粉末涂料与表面处理新技术集中发布，专业观众登记免费。",
       "top": false,
       "alert": "末班车",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -688,7 +690,8 @@
       "desc": "医美行业年终盛会，聚焦年度复盘与增长策略，含主题演讲、圆桌论坛与品牌展览，从业者可预登记参会交流。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -740,7 +743,8 @@
       "desc": "国际货运、仓储与跨境物流一对一洽谈，货主与货代现场撮合，外贸与跨境电商从业者锁定物流资源的务实平台。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -753,7 +757,8 @@
       "desc": "个人护理品与化妆品技术高峰论坛，覆盖配方研发、功效评价与新原料应用，行业人士预登记后可听会观展。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -766,7 +771,8 @@
       "desc": "第48届亚太网印及数智化印刷展，4万㎡展区超600家企业，丝印移印与数码喷印设备新工艺集中亮相，可看样对接。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -805,7 +811,8 @@
       "desc": "集内容生产、国际交流、城市联动与产业赋能于一体的电影行业博览交易会，面向市场与大众，琶洲展馆地铁8号线新港东站可达。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -844,7 +851,8 @@
       "desc": "智慧交通行业年会，探讨车路协同、智慧公路与交通大数据应用，同期设展展示最新解决方案，需提前报名。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -857,7 +865,8 @@
       "desc": "直播电商行业年度盛典启动仪式，汇聚平台、MCN与品牌方，共探湾区直播电商业态，观众可预约到场参与。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -896,7 +905,8 @@
       "desc": "天然提取物、益生菌与代糖等健康食品原料集中展出，食品饮料与保健品企业看配方趋势的专业展，普通观众可了解新原料。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -909,7 +919,8 @@
       "desc": "健康检测、康复器械与营养品同馆展出，现场多有免费体验项目，建议穿舒适鞋，地铁八号线琶洲站直达。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -922,7 +933,8 @@
       "desc": "预制菜、调味品与烘焙原料集中亮相，试吃摊位多，与烧烤食材展同期举办，一次可逛完两个馆。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -935,7 +947,8 @@
       "desc": "威士忌、白兰地与精酿啤酒集中品鉴，多数展位提供小样试饮，需年满十八岁，建议公共交通前往。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -948,7 +961,8 @@
       "desc": "以知汇湾区 创享未来为主题，知识产权交易、专利成果与地理标志产品同场对接，11月26日至28日举办，企业与创意从业者可提前网上登记。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -961,7 +975,8 @@
       "desc": "华南唯一液冷热管理专业展，700余家展商与15场行业论坛，覆盖数据中心、新能源车与半导体散热全链条，观众预登记后入场，以官网公告为准。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -974,7 +989,8 @@
       "desc": "以出海新动能、服贸通全球为主题，数字贸易、文旅健康与汽车出口服务同场对接，出海企业寻找服务商的年度撮合平台。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -987,7 +1003,8 @@
       "desc": "康复辅具、智慧养老与适老家居集中展出，家有老人可现场体验助行器与护理床，也是看养老产业趋势的年度展会。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",
@@ -1000,7 +1017,8 @@
       "desc": "橡塑行业年度展会，聚焦绿色低碳与ESG趋势，覆盖塑料橡胶原料、机械与制品全链条，业内人士预登记免费入场。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "biz": true
     },
     {
       "cat": "market",

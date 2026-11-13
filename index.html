@@ -59,7 +59,7 @@ var _hmt = _hmt || [];
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/app.css?v=8">
+<link rel="stylesheet" href="assets/app.css?v=9">
 <link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
@@ -184,18 +184,19 @@ var THEME_KEY = "city-events-theme";
 var PAGE_SIZE = 12;
 var DAY = 86400000;
 
+/* 板块 = 内容类型。数据里的 cat 可以有更细的取值（如 bloom 花期），
+   通过 cats 归并到所属板块；花期预警不再单独成板块，改用条目标签 + 状态 chip。 */
 var CATS = [
-  { key: "exhibition", name: "展览",     en: "Exhibition" },
-  { key: "market",     name: "会展市集", en: "Market" },
-  { key: "outdoor",    name: "户外赏花", en: "Outdoor" },
-  { key: "preview",    name: "提前预告", en: "Upcoming" },
-  { key: "bloom",      name: "花期预警", en: "Bloom" },
-  { key: "night",      name: "夜游推荐", en: "Night" }
+  { key: "exhibition", name: "展览",     en: "Exhibition", cats: ["exhibition"] },
+  { key: "market",     name: "市集",     en: "Markets",    cats: ["market"] },
+  { key: "outdoor",    name: "户外赏花", en: "Outdoor",    cats: ["outdoor", "bloom"] },
+  { key: "preview",    name: "演出赛事", en: "Shows",      cats: ["preview"] },
+  { key: "night",      name: "夜游推荐", en: "Night",      cats: ["night"] }
 ];
 var CAT_BY = {};
-CATS.forEach(function (c) { CAT_BY[c.key] = c; });
+CATS.forEach(function (c) { c.cats.forEach(function (k) { CAT_BY[k] = c; }); });
 
-/* 顶栏菜单 = 全部 + 本周必去 + 六大板块 */
+/* 顶栏菜单 = 全部 + 本周必去 + 五大板块 */
 var MENU = [{ key: "all", name: "全部" }, { key: "top", name: "本周必去" }].concat(
   CATS.map(function (c) { return { key: c.key, name: c.name }; })
 );
@@ -286,7 +287,11 @@ function getJSON(url) {
 function liveItems() {
   var list = cache[state.city];
   if (!Array.isArray(list)) return [];
-  return list.filter(function (it) { var d = daysLeft(it.end); return d === null || d >= 0; });
+  return list.filter(function (it) {
+    if (it.biz) return false;               /* 纯 B2B 产业展：留着数据，不进任何列表 */
+    var d = daysLeft(it.end);
+    return d === null || d >= 0;
+  });
 }
 function isBroken() { return cache[state.city] === null; }
 function curCity() {
@@ -310,7 +315,10 @@ function loadCity(key) {
 function isTopFilter() { return state.cat === "top"; }
 function matches(it) {
   if (isTopFilter()) { if (!it.top) return false; }
-  else if (state.cat !== "all" && it.cat !== state.cat) return false;
+  else if (state.cat !== "all") {
+    var board = CAT_BY[state.cat];
+    if (!board || board.cats.indexOf(it.cat) < 0) return false;
+  }
   if (state.area && it.area !== state.area) return false;
   if (state.free && !/免费/.test(it.price || "")) return false;
   if (state.kid && !it.kid) return false;
@@ -332,6 +340,17 @@ function sortByEnd(arr) {
     if (!a.end) return 0;
     return a.end < b.end ? -1 : a.end > b.end ? 1 : 0;
   });
+}
+/* 演出赛事条目多（广州上百条），列表内按「本周 / 下周 / 之后」分段，避免翻 8 页没有坐标 */
+var TIME_BUCKETS = ["本周", "下周", "之后"];
+function bucketOf(end) {
+  var d = daysLeft(end);
+  if (d === null) return 2;
+  var dow = (new Date().getDay() + 6) % 7;   /* 周一 = 0 */
+  var rest = 6 - dow;                        /* 到本周日还剩几天 */
+  if (d <= rest) return 0;
+  if (d <= rest + 7) return 1;
+  return 2;
 }
 
 /* ======================================================================
@@ -448,11 +467,12 @@ function cardHTML(it, i) {
   if (it.venue) meta.push('<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>' + esc(it.venue) + "</span>");
   if (it.area) meta.push("<span>" + esc(it.area) + "</span>");
 
-  return '<article class="card cat-' + it.cat + (sold ? " is-sold" : "") + '" style="--i:' + Math.min(7, i) + '">' +
+  return '<article class="card cat-' + c.key + (sold ? " is-sold" : "") + '" style="--i:' + Math.min(7, i) + '">' +
     (hasSource(it) ? '<a class="card-hit" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer" aria-label="打开 ' + esc(it.title) + ' 的原始出处"></a>' : "") +
     '<div class="card-main">' +
       '<div class="card-top">' +
         '<span class="chip-cat"><i style="width:6px;height:6px;border-radius:50%;background:var(--cc)"></i>' + esc(c.name) + "</span>" +
+        (it.cat === "bloom" ? '<span class="chip-bloom">花期</span>' : "") +
         (it.kid ? '<span class="chip-kid">亲子</span>' : "") +
         (it.sold ? '<span class="chip-sold">已售罄</span>' : "") +
         (it.alert ? '<span class="chip-alert">' + esc(it.alert) + "</span>" : "") +
@@ -535,9 +555,18 @@ function renderGroups() {
     return;
   }
 
-  box.innerHTML = '<div class="cards">' +
-    slice.map(function (it, i) { return cardHTML(it, i); }).join("") +
-    "</div>" + pagerHTML(page, pages);
+  var cards = [];
+  slice.forEach(function (it, i) {
+    if (state.cat === "preview") {
+      var gi = (page - 1) * PAGE_SIZE + i;
+      var b = bucketOf(it.end);
+      if (gi === 0 || bucketOf(list[gi - 1].end) !== b) {
+        cards.push('<div class="group-sep"><span>' + TIME_BUCKETS[b] + "</span></div>");
+      }
+    }
+    cards.push(cardHTML(it, i));
+  });
+  box.innerHTML = '<div class="cards">' + cards.join("") + "</div>" + pagerHTML(page, pages);
 }
 
 function renderAll() {

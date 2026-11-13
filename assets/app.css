@@ -564,6 +564,21 @@ html[data-theme="dark"] .i-sun{display:block}
   background:transparent;color:var(--ink-2,#6b6b6b);
   border:1px dashed currentColor;font-size:var(--fs-micro);font-weight:600;letter-spacing:.02em;
 }
+/* 演出赛事列表内的时间分段（本周 / 下周 / 之后） */
+.group-sep{
+  display:flex;align-items:center;gap:10px;margin:6px 0 0;
+  font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;
+  letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+}
+.group-sep::after{content:"";flex:1;height:1px;background:var(--line)}
+.group-sep span{padding-left:2px}
+/* 花期标记：预警不再是板块，而是贴在户外赏花条目上的标签 */
+.chip-bloom{
+  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
+  padding:1px 7px;border-radius:999px;
+  background:var(--b-bloom);color:var(--c-bloom);
+  font-size:var(--fs-micro);font-weight:600;letter-spacing:.02em;
+}
 /* 已无票：只读 sold 布尔值，不再解析 alert 文本 */
 .chip-sold{
   display:inline-block;white-space:nowrap;padding:1px 8px;border-radius:999px;
