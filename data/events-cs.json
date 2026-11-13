@@ -311,7 +311,8 @@
       "desc": "长沙十年一届的双年展品牌，闭馆布展一个月后11月21日重新开馆，多位艺术家联展，具体展期关注官方平台。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "market",
@@ -325,7 +326,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -339,7 +340,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -353,7 +354,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -393,7 +394,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -407,7 +408,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -434,7 +435,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -512,7 +513,8 @@
       "desc": "红枫季第二篇章配套市集，非遗文创与秋日轻食沿山道摆开，配红叶打卡美陈；建议东门进山、索道下行，避开周末午后客流高峰。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -629,7 +631,8 @@
       "desc": "东门索道上山直达山顶观景台，山脚爱晚亭与岳麓书院可串成半日线；进山需公众号实名预约，周末客流大，建议工作日或早七点前上山。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "preview",
@@ -850,7 +853,8 @@
       "desc": "唱普通人生的专辑巡演长沙站，学生票120元、预售148元、全价178元，VIP258元含周边与演后签售合影，已开票。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1123,7 +1127,8 @@
       "desc": "民谣歌手贰佰第三轮巡演长沙站，十一月的巡演版图新增场次；11月4日12:00已开票，购票需预先绑定身份证，门票不支持转赠。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1552,7 +1557,8 @@
       "desc": "周末限定焰火与两岸灯光联动，杜甫江阁一侧视角最正；场次不固定以岳麓山橘子洲旅游区公众号公告为准，焰火日人流翻倍需更早预约。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1565,7 +1571,8 @@
       "desc": "沉浸式观演青春剧场，行走式代入百年前的湖湘青年岁月。票价198至238元，夜场氛围最好，建议搭配洲头夜景一并安排。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1578,7 +1585,8 @@
       "desc": "仿宋市井全景还原的实景演出，游园票19.9元不含演出，看表演建议买99元起的正价票。需提前预约场次，夜幕亮灯后最有代入感。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1591,7 +1599,8 @@
       "desc": "用长沙方言演九十年代老街巷的市井百态，筒子楼、粉店与霓虹灯牌全场景还原。票价138至298元，适合带长辈来看。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1604,7 +1613,8 @@
       "desc": "夜航串起橘子洲、杜甫江阁与一江两岸灯光，冬季江风大建议加衣。票价88至218元，三馆一厅码头在开福区，出行前确认登船码头。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1617,7 +1627,8 @@
       "desc": "仿唐阁楼临江而立，登阁可俯瞰湘江与对岸灯火，也可品茶听戏。票价20至40元，遇上焰火表演当晚是最佳观赏楼层之一。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1630,7 +1641,8 @@
       "desc": "老教堂外墙上的光影秀配合麻石街巷与老建筑，是近年长沙夜间新晋打卡点。街区免费开放，建议八点后前往，人少灯足。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1643,7 +1655,8 @@
       "desc": "唐风建筑群配水面灯光秀，夜间还有打铁花等非遗表演。距市区约一小时车程，建议下午入园玩到闭园，返程提前约好车。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -1656,7 +1669,8 @@
       "desc": "长沙夜生活核心段，小吃密度全国前列，霓虹招牌一路连到解放西路。免费逛吃，建议错开21点到22点高峰，注意保管随身物品。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     }
   ]
 }

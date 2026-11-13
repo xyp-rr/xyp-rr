@@ -532,7 +532,8 @@
       "desc": "广东美术馆馆藏外国版画精品集中呈现，版种与技法脉络清晰，是了解世界版画史的入门展，白鹅潭馆区常设展出，可与同馆多个特展安排一日观展。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -545,7 +546,8 @@
       "desc": "170余件套展品讲岭南园林两千年演进，从宫署遗迹到三大流派之一；地铁2号线越秀公园站，王宫展区需预约。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -558,7 +560,8 @@
       "desc": "写意山水国画与原创青花陶瓷同场，十米长卷《荔湾胜境》首次亮相，展期以馆方公告为准，地铁1号线长寿路站。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -571,7 +574,8 @@
       "desc": "以丹青笔墨展现湾区生机，园林式展陈与岭南庭园相融，逛展顺路游荔枝湾涌，地铁5号线中山八站步行可达。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -584,7 +588,8 @@
       "desc": "10位当代艺术家20多件作品沿江铺展，工业遗存船台改造空间，江风拂面漫步即观展，地铁11号线大冲口站。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "market",
@@ -598,7 +603,7 @@
       "top": false,
       "alert": "末班车",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -612,7 +617,7 @@
       "top": false,
       "alert": "末班车",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -691,7 +696,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -744,7 +749,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -758,7 +763,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -772,7 +777,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -812,7 +817,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -852,7 +857,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -866,7 +871,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -906,7 +911,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -920,7 +925,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -934,7 +939,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -948,7 +953,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -962,7 +967,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -976,7 +981,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -990,7 +995,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -1004,7 +1009,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -1018,7 +1023,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -1213,7 +1218,8 @@
       "desc": "珠江边金色向日葵花海，可与广州塔同框，APM海心沙站A口。株高约50至60厘米，蹲拍最出片，日落机位更佳。",
       "top": false,
       "alert": "已盛放",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1226,7 +1232,8 @@
       "desc": "设有花间栈道与观景塔，可拍到地铁列车掠过花海的独特画面，建议早上去。地铁4号线东涌站A口。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1239,7 +1246,8 @@
       "desc": "4万㎡海景草原无遮挡直面伶仃洋，远眺深中通道，连通10公里滨海生态长廊可骑行。纯白建筑图南驿是出片点。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1252,7 +1260,8 @@
       "desc": "5公里环湖碧道，湖边落羽杉林已开始泛黄，还有18米高维多利亚港同款大黄鸭，适合露营、骑行与看日落。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1265,7 +1274,8 @@
       "desc": "白色小白宫近日重新亮灯，湖面倒影配秋日晴空自带法式氛围，南区落羽杉由绿转焦糖棕，下午3点半至5点光影最佳。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1278,7 +1288,8 @@
       "desc": "金黄花海配白色帐篷、网红秋千与稻浪风车，上午光线柔和最出片，39.9元一人可玩20多个项目，自驾经大广高速良口收费站即达。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "preview",
@@ -1291,7 +1302,8 @@
       "desc": "电影感主题巡演加场，编曲与灯光围绕影像叙事展开，适合想看点不一样的现场的乐迷，票务以大麦与秀动为准。",
       "top": false,
       "alert": "末班车",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1330,7 +1342,8 @@
       "desc": "五周年特别企划专场，双音乐人同台，永庆坊Livehouse小场地近距离，地铁1号线芳村站，适合周末音乐现场安排。",
       "top": false,
       "alert": "末班车",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1577,7 +1590,8 @@
       "desc": "11月国家队比赛日广州连办两场，也门、马来西亚、巴林三队到访，其余队伍比赛放在越秀山体育场。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1629,7 +1643,8 @@
       "desc": "欧陆前卫重型乐队中国巡演广州站，音墙与编队现场张力足，永庆坊店站席，建议备耳塞并提前查限带物品规定。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1902,7 +1917,8 @@
       "desc": "英国实验摇滚代表乐队，器乐编排复杂且现场张力强，乐迷评价极高。场次稀缺建议尽早购票，场馆安排以票务公告为准。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1915,7 +1931,8 @@
       "desc": "成军十五年的纪念专场，曲目跨度大且常有加演。Livehouse站票无座，建议提早排队占位，场馆细节以票务页面公告为准。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1941,7 +1958,8 @@
       "desc": "美国电子流行唱作人来穗，电子曲目与视觉编排兼具，11月27日晚开演，具体票价与开演时间以购票页为准。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -2242,7 +2260,8 @@
       "desc": "说唱组合AR刘夫阳巡演广州站，12月11日MAO Livehouse开唱，票务以大麦与秀动公告为准，站席建议提前到场兑票。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -2308,7 +2327,8 @@
       "desc": "年末温情专场，翻唱与原创各占一半，适合结伴前往，场馆位于闹市区，散场后需留意地铁末班车时间。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -2321,7 +2341,8 @@
       "desc": "水星奖得主、英伦另类摇滚中坚力量，Livehouse票价580元起，是年底最硬的一张票，大学城店内建议公交或打车前往。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -2334,7 +2355,8 @@
       "desc": "首次专场巡演带band，两张专辑一张EP，学生票117元全价票137元，现场赠手绘微型绘本，演后设签售环节。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -2997,7 +3019,8 @@
       "desc": "10月15日起13.2公里岸线1.3万盏洗墙灯全线亮灯，随船游览时灯带如流光游龙，中大码头风扇屏全息影像值得停留。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -3010,7 +3033,8 @@
       "desc": "配合海丝文旅周推出海丝主题自助餐与科技体验航班，广交会客商有游船专属优惠，建议提前30分钟到码头。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -3023,7 +3047,8 @@
       "desc": "广东首个超高清球体大屏金胥明珠在河面亮起，直径16米，光影秀沿岸铺展，13.7公里碧道不设围墙不收门票。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -3036,7 +3061,8 @@
       "desc": "江畔建筑立面光影演绎，可与沙面、白鹅潭大湾区艺术中心连成一条荔湾夜游线，晚饭后散步即到。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -3049,7 +3075,8 @@
       "desc": "工业风建筑配霓虹灯牌，赛博朋克空中连廊与天台艺术公园随手出片，餐饮营业到深夜。地铁8号线鹅掌坦站C出口直达。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -3062,7 +3089,8 @@
       "desc": "广州知名韩国风情街区，超120家烤肉、汤饭、炸鸡与韩式酒馆扎堆。天黑后灯光氛围最浓，街区道路较窄，建议乘地铁绿色出行。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     }
   ]
 }

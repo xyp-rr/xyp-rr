@@ -572,6 +572,7 @@ html[data-theme="dark"] .i-sun{display:block}
 }
 .group-sep::after{content:"";flex:1;height:1px;background:var(--line)}
 .group-sep span{padding-left:2px}
+.group-sep i{font-style:normal;font-family:var(--font-body);letter-spacing:0;color:var(--faint);font-weight:400}
 /* 花期标记：预警不再是板块，而是贴在户外赏花条目上的标签 */
 .chip-bloom{
   display:inline-flex;align-items:center;gap:4px;white-space:nowrap;

@@ -675,7 +675,8 @@
       "desc": "国际艺术家组合为太子湾定制的沉浸式公共艺术装置，明快色彩与滨海风光同框。地铁13号线太子湾站出站即到，白天光线最通透。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -688,7 +689,8 @@
       "desc": "吉伊卡哇深圳首家旗舰店同步带来华南首展修炼日常，店内外角色装置与限定周边密集，商场范围免费入场，地铁后海站可达。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -701,7 +703,8 @@
       "desc": "依托深圳城市艺术实验室平台，叩问未来城市的空间想象与人文价值，科技艺术互动装置居多，适合亲子与设计爱好者。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -714,7 +717,8 @@
       "desc": "全球首次系统性完整记录一带一路全线发展实景与人文底色的纪实影像大展，11月14日启幕，影像爱好者值得预留半天。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -727,7 +731,8 @@
       "desc": "敦煌守护神常书鸿纪念展，呈现其从巴黎画坛走向莫高窟的艺术人生，与浙江美术馆藏作品展接力上新，逢周一闭馆。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -740,7 +745,8 @@
       "desc": "黄宾虹、潘天寿、林风眠等近百件现当代中国艺术精品南下，继吴冠中展后两馆再度携手，展期待官方公布。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "exhibition",
@@ -753,7 +759,8 @@
       "desc": "从城市生态到微观生命再到国门生物安全，三重展区层层嵌套；入馆即可参观无需单独预约，适合亲子半日，注意周一场馆闭馆。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "market",
@@ -767,7 +774,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -794,7 +801,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -808,7 +815,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -822,7 +829,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -836,7 +843,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -850,7 +857,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -981,7 +988,7 @@
       "top": false,
       "alert": "",
       "kid": false,
-      "biz": true
+      "gate": "biz"
     },
     {
       "cat": "market",
@@ -1072,7 +1079,8 @@
       "desc": "沿海滨栈道骑行或散步，秋冬候鸟陆续抵达红树林，日落机位极佳，地铁9号线深圳湾公园站D2口，周末建议早去停车难。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1085,7 +1093,8 @@
       "desc": "深圳第一高峰，秋高气爽时能远眺山海，登云道是最成熟的一条路线。秀桐道近期施工建议改走登云道，地铁2号线或8号线梧桐山南站D口。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1098,7 +1107,8 @@
       "desc": "市区近郊成熟石阶步道，登顶可俯瞰深圳城区全景，沿途有机会遇到猕猴。两小时可往返，新手与亲子友好，地铁7号线桃源村站D口。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1111,7 +1121,8 @@
       "desc": "新通的鹏坝通道把车程压缩到十分钟，滨海栈道、湿地观鸟与银叶树古林连成一片。周末车位紧张，建议地铁加公交组合或错峰出行。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "outdoor",
@@ -1124,7 +1135,8 @@
       "desc": "西丽湖绿道旁30亩四季花田正值盛放，千日红、鼠尾草与马鞭草粉紫交织，坡度平缓适合遛娃，地铁7号线西丽湖站B口。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "preview",
@@ -1150,7 +1162,8 @@
       "desc": "格鲁吉亚钢琴家以超强技巧与舞台张力著称，曲目与开票信息以音乐厅官方公告为准，建议提前关注开售提醒。",
       "top": false,
       "alert": "末班车",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1176,7 +1189,8 @@
       "desc": "丹麦后摇名团巡演深圳站，宏大音景与情绪层层堆叠，下沙店场地紧凑氛围佳，后摇乐迷别错过。",
       "top": false,
       "alert": "末班车",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1332,7 +1346,8 @@
       "desc": "脆莓乐队新专辑巡演深圳站，浪漫摇滚曲风搭配鲜活动感现场，Z空间场地，演出后可顺路逛欢乐港湾夜景。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1488,7 +1503,8 @@
       "desc": "田原主理的独立现场，不可能三角组合呈现迷你而完整的音乐彩虹，B10现场站立式，票价以票务页面为准。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1501,7 +1517,8 @@
       "desc": "深圳交响乐团海之交响音乐会，19点30分开场，福田中心区场馆，可与周边商圈安排一晚经典时光。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -1527,7 +1544,8 @@
       "desc": "梦游动物园冬季巡演深圳站，独立摇滚现场，下沙店空间紧凑互动强，适合周末晚间观演，滨河大道夜景顺带一逛。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "weekday"
     },
     {
       "cat": "preview",
@@ -2060,7 +2078,8 @@
       "desc": "75 台剧目、148 场演出，36 部大湾区首演，闭幕为音乐会版《茶花女》；深圳为主会场并联动湾区多城，热门场次需提前抢票。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "bloom",
@@ -2372,7 +2391,8 @@
       "desc": "湖边芦苇荡在夕阳下泛着金光，人少景美可独享整片湖畔，傍晚前来还能看日落，记得带驱蚊水穿长袖。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2424,7 +2444,8 @@
       "desc": "主打仙侠主题的夜游体验，将经典仙侠文化与现代光影科技结合，把整个农场打造成灯火江湖，适合亲子夜探。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2437,7 +2458,8 @@
       "desc": "水幕配合激光与音乐的多媒体光影秀，每场约十余分钟，免费不用预约。表演在露天水幕广场，建议提前十五分钟到场找正面位置。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2450,7 +2472,8 @@
       "desc": "每晚两场，传承之旅与遇见观澜各约十分钟，古墟骑楼作背景很有年代感。建议19点前到达看亮灯过程，地铁4号线观澜站B口步行约九分钟。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2463,7 +2486,8 @@
       "desc": "蛇口地标性的喷水灯光表演，明轮船为背景，看完可沿着滨海街区吃夜宵。周末场次更密，地铁2号线海上世界站出站即是。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2476,7 +2500,8 @@
       "desc": "数百架无人机在埃菲尔铁塔模型上空编队，是全园夜间压轴。买一张园区门票即可观看，建议提前二十分钟到铁塔舞台前排占位。",
       "top": false,
       "alert": "",
-      "kid": true
+      "kid": true,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2489,7 +2514,8 @@
       "desc": "以后海摩天建筑群为背景，灯光落在湖面上格外通透，星光桥与派桥是最佳观赏点。傍晚先看日落再等亮灯，节奏刚刚好，免费不用预约。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2502,7 +2528,8 @@
       "desc": "以市民中心及周边楼群为幕布，整座城市中心区一起亮灯。市民中心广场需提前在小程序预约，莲花山山顶观赏位无需预约。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     },
     {
       "cat": "night",
@@ -2515,7 +2542,8 @@
       "desc": "一束光如笔尖落在桂湾楼群上，晕开微微起伏的蓝图，比传统灯光秀更有叙事感。观赏点在前海石公园沿岸，地铁5号线宝安中心站可达。",
       "top": false,
       "alert": "",
-      "kid": false
+      "kid": false,
+      "gate": "evergreen"
     }
   ]
 }

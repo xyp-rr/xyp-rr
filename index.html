@@ -59,7 +59,7 @@ var _hmt = _hmt || [];
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/app.css?v=9">
+<link rel="stylesheet" href="assets/app.css?v=10">
 <link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
@@ -288,7 +288,9 @@ function liveItems() {
   var list = cache[state.city];
   if (!Array.isArray(list)) return [];
   return list.filter(function (it) {
-    if (it.biz) return false;               /* 纯 B2B 产业展：留着数据，不进任何列表 */
+    /* gate 决定发不发：biz（B2B 产业展）与 weekday（只在工作日开）不进列表；
+       evergreen（无截止日的常设展/公园）保留，但在列表末尾单列「随时可去」 */
+    if (it.gate === "biz" || it.gate === "weekday") return false;
     var d = daysLeft(it.end);
     return d === null || d >= 0;
   });
@@ -383,12 +385,13 @@ function renderBanner() {
   var c = curCity();
   if (!c) return;
   var items = liveItems();
+  var thisWeek = items.filter(function (it) { return it.end !== ""; });
   $("#kicker").textContent = dateCn() + " · 第 " + issueNo() + " 期";
   $("#cityName").textContent = c.name;
   $("#cityEn").textContent = c.en;
   var note = CITY_NOTES[c.key] || "展览、市集、赏花、演出与夜游。";
   $("#heroLead").innerHTML = '<span class="lead-note">' + esc(note) +
-    '</span> <span class="lead-count">这周有 <b id="heroCount">' + items.length + "</b> 个地方值得出门。</span>";
+    '</span> <span class="lead-count">这周有 <b id="heroCount">' + thisWeek.length + "</b> 个地方值得出门。</span>";
     var img = $("#heroImg");
   img.alt = c.name + "城市照片";
   var src = ASSET + "/city-" + c.key + ".jpg";
@@ -399,7 +402,7 @@ function renderBanner() {
     pre.onerror = function () { img.style.opacity = "1"; };
     pre.src = src;
   }
-  document.title = c.name + "这周去哪 · " + items.length + " 个去处 ｜ 城市活动晨报";
+  document.title = c.name + "这周去哪 · " + thisWeek.length + " 个去处 ｜ 城市活动晨报";
 }
 
 function renderSidebar() {
@@ -560,8 +563,13 @@ function renderGroups() {
     if (state.cat === "preview") {
       var gi = (page - 1) * PAGE_SIZE + i;
       var b = bucketOf(it.end);
-      if (gi === 0 || bucketOf(list[gi - 1].end) !== b) {
+      if (i === 0 || bucketOf(list[gi - 1].end) !== b) {
         cards.push('<div class="group-sep"><span>' + TIME_BUCKETS[b] + "</span></div>");
+      }
+    } else if (it.gate === "evergreen") {
+      var pi = (page - 1) * PAGE_SIZE + i;
+      if (i === 0 || list[pi - 1].gate !== "evergreen") {
+        cards.push('<div class="group-sep"><span>随时可去</span><i>无截止日 · 不必赶</i></div>');
       }
     }
     cards.push(cardHTML(it, i));
