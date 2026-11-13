@@ -47,7 +47,9 @@ var _hmt = _hmt || [];
 
   数据契约（与自动化任务绑定，禁止改动）：
     data/cities.json          [{key,name,en}]
-    data/events-<key>.json    {updated,items:[{cat,title,date,end,venue,area,price,desc,top,alert,url,source}]}
+    data/events-<key>.json    {updated,items:[{cat,title,date,end,venue,area,price,desc,top,alert,kid,sold,url,source}]}
+  kid / sold 为可选布尔值（紧跟 alert）：kid = 适合带 3—12 岁儿童；sold = 已无票，卡片置灰并标「已售罄」。
+  alert 只放时效与观赏状态（见 tools/validate.mjs 白名单），票务过程写进 price。
   url/source 可缺省（旧数据），缺省时卡片点击走搜索入口。
   新增城市只要在 cities.json 加一行，并在 assets/ 放 city-<key>.jpg。
   每条活动的 url 指向可信度最高的原始出处，卡片点击新开页签跳转；没有 url 时退化为搜索入口。
@@ -57,7 +59,7 @@ var _hmt = _hmt || [];
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/app.css?v=7">
+<link rel="stylesheet" href="assets/app.css?v=8">
 <link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
@@ -440,7 +442,7 @@ function priceTag(it) {
 
 function cardHTML(it, i) {
   var c = CAT_BY[it.cat] || CATS[0];
-  var sold = /售罄/.test(it.alert || "");
+  var sold = it.sold === true;
   var meta = [];
   meta.push('<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>' + esc(it.date || "长期") + "</span>");
   if (it.venue) meta.push('<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>' + esc(it.venue) + "</span>");
@@ -452,6 +454,7 @@ function cardHTML(it, i) {
       '<div class="card-top">' +
         '<span class="chip-cat"><i style="width:6px;height:6px;border-radius:50%;background:var(--cc)"></i>' + esc(c.name) + "</span>" +
         (it.kid ? '<span class="chip-kid">亲子</span>' : "") +
+        (it.sold ? '<span class="chip-sold">已售罄</span>' : "") +
         (it.alert ? '<span class="chip-alert">' + esc(it.alert) + "</span>" : "") +
         countdownChip(it) +
       "</div>" +

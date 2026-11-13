@@ -564,6 +564,15 @@ html[data-theme="dark"] .i-sun{display:block}
   background:transparent;color:var(--ink-2,#6b6b6b);
   border:1px dashed currentColor;font-size:var(--fs-micro);font-weight:600;letter-spacing:.02em;
 }
+/* 已无票：只读 sold 布尔值，不再解析 alert 文本 */
+.chip-sold{
+  display:inline-block;white-space:nowrap;padding:1px 8px;border-radius:999px;
+  background:var(--muted);color:var(--surface);font-size:var(--fs-micro);font-weight:700;letter-spacing:.02em;
+}
+.card.is-sold{opacity:.66}
+.card.is-sold:hover{opacity:.82}
+.card.is-sold .card-title{color:var(--muted)}
+.card.is-sold .price{text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--faint)}
 .chip-days.soon{background:transparent;color:var(--accent);border:1px solid currentColor}
 .pick-title{
   font-family:var(--font-body);font-weight:600;
