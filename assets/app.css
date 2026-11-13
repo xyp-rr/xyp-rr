@@ -558,6 +558,12 @@ html[data-theme="dark"] .i-sun{display:block}
   background:var(--accent);color:var(--accent-ink);
   font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;
 }
+.chip-kid{
+  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
+  padding:2px 8px;border-radius:999px;
+  background:transparent;color:var(--ink-2,#6b6b6b);
+  border:1px dashed currentColor;font-size:var(--fs-micro);font-weight:600;letter-spacing:.02em;
+}
 .chip-days.soon{background:transparent;color:var(--accent);border:1px solid currentColor}
 .pick-title{
   font-family:var(--font-body);font-weight:600;

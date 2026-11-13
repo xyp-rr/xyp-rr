@@ -57,7 +57,7 @@ var _hmt = _hmt || [];
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Noto+Serif+SC:wght@500..900&amp;family=Noto+Sans+SC:wght@400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/app.css?v=6">
+<link rel="stylesheet" href="assets/app.css?v=7">
 <link rel="preload" as="image" href="assets/city-gz.jpg">
 </head>
 <body>
@@ -130,6 +130,7 @@ var _hmt = _hmt || [];
       <div class="resultbar">
         <p class="result" id="result" aria-live="polite"></p>
         <div class="mini-filters">
+          <button class="mini" id="kidBtn" type="button" data-kid aria-pressed="false">亲子</button>
           <button class="mini" id="freeBtn" type="button" data-free aria-pressed="false">免费</button>
           <button class="mini" id="favBtn" type="button" data-favonly aria-pressed="false">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A4.1 4.1 0 0 1 12 7.6 4.1 4.1 0 0 1 19 10.7C19 15.6 12 20 12 20Z"/></svg>
@@ -203,7 +204,7 @@ var CITY_NOTES = {
   cs: "湘江边的烟火、岳麓山下的书院、五一广场的夜宵。"
 };
 
-var state = { city: null, cat: "all", q: "", free: false, fav: false, area: "", page: 1 };
+var state = { city: null, cat: "all", q: "", free: false, fav: false, kid: false, area: "", page: 1 };
 var cityIndex = [];
 var cache = {};
 var updated = {};
@@ -310,6 +311,7 @@ function matches(it) {
   else if (state.cat !== "all" && it.cat !== state.cat) return false;
   if (state.area && it.area !== state.area) return false;
   if (state.free && !/免费/.test(it.price || "")) return false;
+  if (state.kid && !it.kid) return false;
   if (state.fav && !isFav(it)) return false;
   var q = state.q.trim().toLowerCase();
   if (q) {
@@ -319,7 +321,7 @@ function matches(it) {
   return true;
 }
 function filtered() {
-  return !!(state.q.trim() || state.free || state.fav || state.area || state.cat !== "all");
+  return !!(state.q.trim() || state.free || state.kid || state.fav || state.area || state.cat !== "all");
 }
 function sortByEnd(arr) {
   return arr.slice().sort(function (a, b) {
@@ -449,6 +451,7 @@ function cardHTML(it, i) {
     '<div class="card-main">' +
       '<div class="card-top">' +
         '<span class="chip-cat"><i style="width:6px;height:6px;border-radius:50%;background:var(--cc)"></i>' + esc(c.name) + "</span>" +
+        (it.kid ? '<span class="chip-kid">亲子</span>' : "") +
         (it.alert ? '<span class="chip-alert">' + esc(it.alert) + "</span>" : "") +
         countdownChip(it) +
       "</div>" +
@@ -566,7 +569,7 @@ function switchCity(key) {
   if (key === state.city) return;
   state.city = key;
   document.body.dataset.scene = key;
-  state.cat = "all"; state.q = ""; state.free = false; state.fav = false; state.area = ""; state.page = 1;
+  state.cat = "all"; state.q = ""; state.free = false; state.kid = false; state.fav = false; state.area = ""; state.page = 1;
   syncQuery();
   try { localStorage.setItem(CITY_KEY, key); } catch (e) {}
   $("#groups").innerHTML = '<div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>';
@@ -605,6 +608,9 @@ function syncMini() {
   liveItems().forEach(function (it) { if (isFav(it)) n++; });
   $("#favN").textContent = n;
   $("#freeBtn").setAttribute("aria-pressed", state.free ? "true" : "false");
+  $("#kidBtn").setAttribute("aria-pressed", state.kid ? "true" : "false");
+  $("#kidBtn").style.color = state.kid ? "var(--accent)" : "";
+  $("#kidBtn").style.borderColor = state.kid ? "currentColor" : "";
   $("#favBtn").setAttribute("aria-pressed", state.fav ? "true" : "false");
   $("#favBtn").style.color = state.fav ? "var(--accent)" : "";
   $("#favBtn").style.borderColor = state.fav ? "currentColor" : "";
@@ -629,7 +635,7 @@ function setQuery(v) {
   renderGroups();
 }
 function resetFilters() {
-  state.cat = "all"; state.q = ""; state.free = false; state.fav = false; state.area = ""; state.page = 1;
+  state.cat = "all"; state.q = ""; state.free = false; state.kid = false; state.fav = false; state.area = ""; state.page = 1;
   syncSearchUI(); renderMenu(); renderSidebar(); renderGroups(); syncMini();
 }
 
@@ -668,6 +674,7 @@ function bind() {
     }
     if (e.target.closest("[data-clear-area]")) { setFilter({ area: "" }); return; }
     if (e.target.closest("[data-free]")) { setFilter({ free: !state.free }); return; }
+    if (e.target.closest("[data-kid]")) { setFilter({ kid: !state.kid }); return; }
     if (e.target.closest("[data-favonly]")) { setFilter({ fav: !state.fav }); return; }
 
     var fav = e.target.closest("[data-fav]");
