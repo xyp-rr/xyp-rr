@@ -1,20 +1,13 @@
 # secrets - never commit
-.cf_token
-.cf_account
 .gh_token
 
-# build / deploy artifacts
-.wrangler/
-public/
+# dependencies (none for the site; kept for local tooling)
 node_modules/
 
-# local backups
-index.backup-*.html
-
-# local-only tooling and deploy scripts (not published to the site repo)
+# local-only tooling, deploy script and agent notes (not published to the site repo)
 tools/
 deploy-git.sh
-deploy.sh
+AGENTS.md
 
 # os
 .DS_Store
