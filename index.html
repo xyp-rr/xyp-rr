@@ -204,7 +204,8 @@ var MENU = [{ key: "all", name: "全部" }, { key: "top", name: "本周必去" }
 var CITY_NOTES = {
   gz: "珠江两岸的展览、骑楼下的市集、白云山下的花期。",
   sz: "海边的日落、创意园的展览、湾区的夜。",
-  cs: "湘江边的烟火、岳麓山下的书院、五一广场的夜宵。"
+  cs: "湘江边的烟火、岳麓山下的书院、五一广场的夜宵。",
+  ccn: "南湖的亭桥、净月潭的林、人民大街两侧的旧建筑。"
 };
 
 var state = { city: null, cat: "all", q: "", free: false, fav: false, kid: false, area: "", page: 1 };
@@ -398,8 +399,12 @@ function renderBanner() {
   if (img.getAttribute("src") !== src) {
     img.style.opacity = "0";
     var pre = new Image();
-    pre.onload = function () { img.src = src; img.style.opacity = "1"; };
-    pre.onerror = function () { img.style.opacity = "1"; };
+    pre.onload = function () { img.src = src; img.style.display = ""; img.style.opacity = "1"; };
+    pre.onerror = function () {
+      /* 这个城市还没有自己的照片：宁可不放图，也绝不回退去显示上一个城市的封面 */
+      img.removeAttribute("src");
+      img.style.display = "none";
+    };
     pre.src = src;
   }
   document.title = c.name + "这周去哪 · " + thisWeek.length + " 个去处 ｜ 城市活动晨报";
