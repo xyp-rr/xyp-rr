@@ -13,5 +13,10 @@
     "key": "cs",
     "name": "长沙",
     "en": "CHANGSHA"
+  },
+  {
+    "key": "ccn",
+    "name": "长春",
+    "en": "CHANGCHUN"
   }
 ]
